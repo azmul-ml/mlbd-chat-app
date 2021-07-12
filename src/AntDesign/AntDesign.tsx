@@ -1,5 +1,6 @@
 import React, { memo, useState } from "react";
 import { Link } from "react-router-dom";
+import classNames from "classnames/bind";
 import styles from "./chat.module.scss";
 import { Row, Col, Avatar, Typography, Button, List, Input } from "antd";
 import { AppIcons, msgActButtons } from "./AppIcons";
@@ -24,6 +25,8 @@ const newData = [
 ];
 
 const AntDesignScreen = () => {
+  const cx = classNames.bind(styles);
+
   const [fullScreen, setFullScreen] = useState(false);
   const [chat, setChat] = useState(false);
 
@@ -59,7 +62,7 @@ const AntDesignScreen = () => {
               </Col>
             </Row>
 
-            <Row className={styles.chatLeftDetails}>
+            <Row className={cx("chatLeftDetails", "chBlock")}>
               <Title level={4} className={styles.chatLeftDetailsHeader}>
                 {AppIcons.CaretDownOutlined}
                 <span className={styles.chatLeftDetailsHeaderText}>
@@ -159,7 +162,9 @@ const AntDesignScreen = () => {
                     : AppIcons.FullscreenOutlined
                 }
               ></Button>
-              <Button type="link">{AppIcons.CloseOutlined}</Button>
+              <Button type="link" onClick={() => setChat(!chat)}>
+                {AppIcons.CloseOutlined}
+              </Button>
             </Row>
 
             <Row className={styles.chatRightHeader}>
@@ -492,7 +497,7 @@ const AntDesignScreen = () => {
               </Col>
             </Row>
 
-            <Row className={styles.chatComposePanel}>
+            <Row className={cx("chatComposePanel", "chBlock")}>
               <form>
                 <Col className={styles.chatCompose}>
                   <TextArea className={styles.textArea} rows={4} />
