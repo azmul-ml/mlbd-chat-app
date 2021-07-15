@@ -28,7 +28,7 @@ const AntDesignScreen = () => {
   const cx = classNames.bind(styles);
 
   const [fullScreen, setFullScreen] = useState(false);
-  const [chat, setChat] = useState(false);
+  const [chat, setChat] = useState(true);
 
   return (
     <>
@@ -40,7 +40,7 @@ const AntDesignScreen = () => {
               : styles.chatMain
           }
         >
-          <Col span={8} className={styles.chatLeft}>
+          <Col span={6} className={styles.chatLeft}>
             <Row className={styles.chatLeftHeader}>
               <Avatar size={50} icon="user" className={styles.chatLeftAvatar} />
 
@@ -148,8 +148,8 @@ const AntDesignScreen = () => {
             </Row>
           </Col>
 
-          <Col span={16} className={styles.chatRight}>
-            <Row className={styles.chatClose}>
+          <Col span={18} className={styles.chatRight}>
+            <Row className={styles.chatWindowActBtns}>
               <Button type="link" onClick={() => setChat(!chat)}>
                 {AppIcons.MinusOutlined}
               </Button>
