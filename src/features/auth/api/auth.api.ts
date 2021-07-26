@@ -1,10 +1,11 @@
 import { apiAuth } from "../../../api/api";
 import { AxiosResponse } from "axios";
 import { AuthEndpointsEnum } from "../constants/auth.endpoints";
-import { LoginCredentials } from "../types/auth.types";
+import { LoginCredentials, RegistrationCredentials } from "../types/auth.types";
 
 // eslint-disable-next-line import/prefer-default-export
-const loginApi = (data: LoginCredentials): Promise<AxiosResponse> =>
+export const loginApi = (data: LoginCredentials): Promise<AxiosResponse> =>
   apiAuth.post(`${AuthEndpointsEnum.LOGIN}`, data);
 
-export default loginApi;
+export const registerApi = (data: RegistrationCredentials): Promise<AxiosResponse> =>
+  apiAuth.post(`${AuthEndpointsEnum.REGISTER}`, data);

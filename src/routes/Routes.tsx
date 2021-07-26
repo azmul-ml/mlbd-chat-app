@@ -2,6 +2,7 @@ import { Redirect } from "react-router";
 import cookie from "react-cookies";
 
 import Login from "../features/auth/components/Login";
+import Register from "../features/auth/components/Register";
 import MainLayout from "../features/chat-window/MainLayout";
 import MainWindow from "../features/chat-window/MainWindow";
 import { AUTH_ACCESS_TOKEN } from "../features/auth/constants/auth.keys";
@@ -11,6 +12,7 @@ import Settings from "../features/settings/screens/Settings";
 
 const ROUTES = [
   { path: "/", key: "ROOT", exact: true, component: Login },
+  { path: "/register", key: "REG", component: Register },
   {
     path: "/app",
     key: "APP",
@@ -41,7 +43,7 @@ const ROUTES = [
         component: MainLayout,
       },
       {
-        path: "/app/settings",
+        path: "/app/:id/settings",
         key: "APP_SETTINGS",
         exact: true,
         component: Settings,

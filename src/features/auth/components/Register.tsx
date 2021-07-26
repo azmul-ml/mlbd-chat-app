@@ -1,28 +1,28 @@
 import React from "react";
 import { Formik } from "formik";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { useAppDispatch } from "../../../app/hooks";
-import { loginUser } from "../redux/auth.slice";
-import { LoginCredentials } from "../types/auth.types";
+import { registerUser } from "../redux/auth.slice";
+import { RegistrationCredentials } from "../types/auth.types";
 
-export default function Login() {
+export default function Register() {
   const dispatch = useAppDispatch();
   let history = useHistory();
 
-  const handleSubmit = async (values: LoginCredentials) => {
-    const response = await dispatch(loginUser(values));
-    if (response.payload.data) {
-      history.push("/app");
+  const handleSubmit = async (values: RegistrationCredentials) => {
+    const response = await dispatch(registerUser(values));
+    if (response.payload) {
+      history.push("/");
     }
-    console.log(response.payload.data);
+    console.log(response.payload);
   };
 
   return (
     <div>
-      <h1>Login!</h1>
+      <h1>Register!</h1>
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ name: "", email: "", password: "", roles: ["admin"]}}
         onSubmit={handleSubmit}
       >
         {({
@@ -35,6 +35,18 @@ export default function Login() {
           isSubmitting,
         }) => (
           <form onSubmit={handleSubmit}>
+            <label htmlFor="name">Name:</label>
+            <br/>
+            <input
+              type="text"
+              name="name"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.name}
+            />
+            <br/><br/>
+            <label htmlFor="email">Email:</label>
+            <br/>
             <input
               type="email"
               name="email"
@@ -42,7 +54,10 @@ export default function Login() {
               onBlur={handleBlur}
               value={values.email}
             />
+            <br/><br/>
             {errors.email && touched.email && errors.email}
+            <label htmlFor="email">Password:</label>
+            <br/>
             <input
               type="password"
               name="password"
@@ -50,6 +65,7 @@ export default function Login() {
               onBlur={handleBlur}
               value={values.password}
             />
+            <br/><br/>
             {errors.password && touched.password && errors.password}
             <button type="submit" disabled={isSubmitting}>
               Submit
@@ -57,7 +73,7 @@ export default function Login() {
           </form>
         )}
       </Formik>
-      <p>Don't have an account? <Link to="/register">Signup</Link> Here</p>
     </div>
   );
 }
+

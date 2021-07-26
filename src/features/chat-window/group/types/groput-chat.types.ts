@@ -19,3 +19,9 @@ export interface IGroupResponse {
   members: string[];
   meta: any;
 }
+
+export interface ISentMessage {
+  group_id: string;
+  message: string;
+  token: string;
+}

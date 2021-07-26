@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import cookie from "react-cookies";
 
-import loginApi from "../api/auth.api";
+import { loginApi, registerApi } from "../api/auth.api";
 import { AUTH_ACCESS_TOKEN } from "../constants/auth.keys";
-import { LoginCredentials } from "../types/auth.types";
+import { LoginCredentials, RegistrationCredentials } from "../types/auth.types";
 const initialState = {
   username: "",
   email: "",
@@ -32,4 +32,19 @@ export const loginUser = createAsyncThunk(
     )
 );
 
+export const registerUser = createAsyncThunk(
+  "auth/register",
+  (credentials: RegistrationCredentials, { dispatch }) =>
+  registerApi(credentials).then(
+      (res) => {
+        // console.log(res);
+        // cookie.save(AUTH_ACCESS_TOKEN, res.data.token, {});
+        return res.data;
+      },
+      (err) => err.message
+    )
+);
+
 export default authSlice.reducer;
+
+

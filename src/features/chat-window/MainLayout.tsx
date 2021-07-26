@@ -27,6 +27,7 @@ import Title from "antd/lib/typography/Title";
 import {
   chatClient,
   exClientChat,
+  exClientChatTh,
 } from "../chat-window/redux/chat-client.slice";
 import { AUTH_ACCESS_TOKEN } from "../auth/constants/auth.keys";
 import Chats from "./group/screens/Chats";
@@ -35,7 +36,7 @@ import {
   IGroupResponse,
 } from "./group/types/groput-chat.types";
 import { getMyGroup } from "./group/redux/getMy-groups";
-import Item from "antd/lib/list/Item";
+import { singleGroupSlice } from "./group/redux/get-single-group.slice";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -69,14 +70,16 @@ export default function MainLayout({ children }: any) {
   }
 
   const handleGroupLink = async (id: string) => {
+    const { addSingleGroup } = singleGroupSlice.actions;
     const token = cookie.load(AUTH_ACCESS_TOKEN);
     const data = {
       group_id: id,
       token,
     };
     const res = await dispatch(getSingleGroup(data));
-    console.log(res.payload);
-    setGroupItem(res.payload);
+    await dispatch(addSingleGroup(res.payload));
+    console.log("signlegroupres", res.payload);
+    // await setGroupItem(res.payload);
     res.payload && history.push(`app/room/${id}`);
   };
 
@@ -100,6 +103,7 @@ export default function MainLayout({ children }: any) {
     const groups = res.payload?.filter((d: any) => d.meta !== null);
     setMyGroups(groups);
     const { initChat } = chatClient.actions;
+    dispatch(exClientChatTh());
     dispatch(initChat());
 
     console.log(res);
@@ -233,7 +237,7 @@ export default function MainLayout({ children }: any) {
           ></Button>
           <Button type="link">{AppIcons.CloseOutlined}</Button>
         </Row> */}
-        <Row className={styles.chatRightHeader}>
+        {/* <Row className={styles.chatRightHeader}>
           <Col className={styles.chatRightHeaderTitle}>
             <div>
               <Avatar
@@ -282,7 +286,7 @@ export default function MainLayout({ children }: any) {
                   ))}
                   {/* <Option value="jack">Jack</Option>
                   <Option value="lucy">Lucy</Option>
-                  <Option value="tom">Tom</Option> */}
+                  <Option value="tom">Tom</Option> 
                 </Select>
               }
               title="Title"
@@ -295,48 +299,24 @@ export default function MainLayout({ children }: any) {
                 onClick={() => console.log("add member")}
                 icon={AppIcons.UserAddOutlined}
               ></Button>
-              {/* <Button type="primary">Click me</Button> */}
+              {/* <Button type="primary">Click me</Button> 
             </Popover>
             <Button 
               type="link" 
               icon={AppIcons.InfoCircleFilled}
-              href={`/app/settings`}
             >
             </Button>
           </Col>
-        </Row>
+        </Row> */}
+        {console.log("dddddddddd", groupItem)}
         <Chats groupItem={groupItem} />
 
-        <Row className={styles.chatComposePanel}>
-          <form>
-            <Col className={styles.chatCompose}>
-              <TextArea className={styles.textArea} rows={4} />
-              <Button>Send</Button>
-            </Col>
-
-            <Col className={styles.chatComposeActions}>
-              <Col className={styles.chatComposeActionsEditor}>
-                Editor buttons
-              </Col>
-
-              <Col className={styles.chatComposeActionsAttachments}>
-                <Button type="link" icon={AppIcons.LinkOutlined}></Button>
-
-                <Button type="link" icon={AppIcons.LikeFilled}></Button>
-
-                <Button type="link" icon={AppIcons.CameraFilled}></Button>
-
-                <Button type="link" icon={AppIcons.UploadOutlined}></Button>
-              </Col>
-            </Col>
-          </form>
-          <Modal
-            style={styles}
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-            handleGroupModal={setIsOpen}
-          />
-        </Row>
+        <Modal
+          style={styles}
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          handleGroupModal={setIsOpen}
+        />
       </Col>
     </Row>
   );
