@@ -35,6 +35,7 @@ import {
   IGroupResponse,
 } from "./group/types/groput-chat.types";
 import { getMyGroup } from "./group/redux/getMy-groups";
+import Item from "antd/lib/list/Item";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -101,7 +102,7 @@ export default function MainLayout({ children }: any) {
     const { initChat } = chatClient.actions;
     dispatch(initChat());
 
-    console.log(res.payload?.filter((d: any) => d.meta !== null));
+    console.log(res);
   };
   useEffect(() => {
     getGroups();
@@ -296,7 +297,12 @@ export default function MainLayout({ children }: any) {
               ></Button>
               {/* <Button type="primary">Click me</Button> */}
             </Popover>
-            <Button type="link" icon={AppIcons.InfoCircleFilled}></Button>
+            <Button 
+              type="link" 
+              icon={AppIcons.InfoCircleFilled}
+              href={`/app/settings`}
+            >
+            </Button>
           </Col>
         </Row>
         <Chats groupItem={groupItem} />
