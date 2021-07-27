@@ -38,7 +38,7 @@ const AntDesignScreen = () => {
             : styles.chatMain
         }
       >
-        <Col span={6} className={styles.chatLeft}>
+        <Col xs={0} sm={0} md={6} lg={6} xl={6} xxl={6} className={styles.chatLeft}>
           <Row className={styles.chatLeftHeader}>
             <Avatar size={50} icon="user" className={styles.chatLeftAvatar} />
 
@@ -146,7 +146,7 @@ const AntDesignScreen = () => {
           </Row>
         </Col>
 
-        <Col span={18} className={styles.chatRight}>
+        <Col xs={24} sm={24} md={18} lg={18} xl={18} xxl={18} className={styles.chatRight}>
           <Row className={styles.chatRightHeader}>
             <Col className={styles.chatRightHeaderTitle}>
               <Avatar
