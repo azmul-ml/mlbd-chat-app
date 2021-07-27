@@ -27,7 +27,7 @@ import Title from "antd/lib/typography/Title";
 import {
   chatClient,
   exClientChat,
-  exClientChatTh,
+  // exClientChatTh,
 } from "../chat-window/redux/chat-client.slice";
 import { AUTH_ACCESS_TOKEN } from "../auth/constants/auth.keys";
 import Chats from "./group/screens/Chats";
@@ -59,7 +59,7 @@ export default function MainLayout({ children }: any) {
   const [visible, setVisible] = useState(false);
   const [groupItem, setGroupItem] = useState({});
 
-  const allUsers = useAppSelector((state) => state.user);
+  const allUsers = useAppSelector((state: any) => state.user);
 
   function closeModal() {
     setIsOpen(false);
@@ -78,7 +78,6 @@ export default function MainLayout({ children }: any) {
     };
     const res = await dispatch(getSingleGroup(data));
     await dispatch(addSingleGroup(res.payload));
-    console.log("signlegroupres", res.payload);
     // await setGroupItem(res.payload);
     res.payload && history.push(`app/room/${id}`);
   };
@@ -103,14 +102,13 @@ export default function MainLayout({ children }: any) {
     const groups = res.payload?.filter((d: any) => d.meta !== null);
     setMyGroups(groups);
     const { initChat } = chatClient.actions;
-    dispatch(exClientChatTh());
-    dispatch(initChat());
-
-    console.log(res.payload?.filter((d: any) => d.meta !== null));
+    // dispatch(exClientChatTh());
+    // dispatch(initChat());
+    dispatch(exClientChat());
   };
   useEffect(() => {
     getGroups();
-    exClientChat();
+    // exClientChat();
   }, []);
 
   return (
@@ -281,7 +279,7 @@ export default function MainLayout({ children }: any) {
                       .indexOf(input.toLowerCase()) >= 0
                   }
                 >
-                  {allUsers?.map((user) => (
+                  {allUsers?.map((user: any) => (
                     <Option value={user._id}>{user.name}</Option>
                   ))}
                   {/* <Option value="jack">Jack</Option>
@@ -304,7 +302,6 @@ export default function MainLayout({ children }: any) {
             <Button type="link" icon={AppIcons.InfoCircleFilled}></Button>
           </Col>
         </Row>
-        {console.log("dddddddddd", groupItem)}
         <Chats groupItem={groupItem} />
 
         <Modal

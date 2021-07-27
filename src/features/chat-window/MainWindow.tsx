@@ -107,9 +107,7 @@ const AntDesignScreen = () => {
             >
               <Link to="/">
                 {AppIcons.EditOutlined}
-                <span className={styles.chatLeftDetailsHeaderText}>
-                  Draft
-                </span>
+                <span className={styles.chatLeftDetailsHeaderText}>Draft</span>
               </Link>
             </Row>
 
@@ -122,9 +120,7 @@ const AntDesignScreen = () => {
             >
               <Link to="/">
                 {AppIcons.CaretDownOutlined}
-                <span className={styles.chatLeftDetailsHeaderText}>
-                  Groups
-                </span>
+                <span className={styles.chatLeftDetailsHeaderText}>Groups</span>
                 <Button type="link" icon={AppIcons.PlusOutlined}></Button>
               </Link>
             </Row>
@@ -210,9 +206,7 @@ const AntDesignScreen = () => {
 
             <Col
               span={24}
-              className={
-                styles.chatMessage + " " + styles.chatMessageReceiver
-              }
+              className={styles.chatMessage + " " + styles.chatMessageReceiver}
             >
               <Row className={styles.chatMessageName}>
                 You
@@ -250,9 +244,7 @@ const AntDesignScreen = () => {
 
             <Col
               span={24}
-              className={
-                styles.chatMessage + " " + styles.chatMessageReceiver
-              }
+              className={styles.chatMessage + " " + styles.chatMessageReceiver}
             >
               <Row className={styles.chatMessageName}>
                 You
@@ -324,9 +316,9 @@ const AntDesignScreen = () => {
 
               <Row className={styles.chatMessageTextPanel}>
                 <Col className={styles.chatMessageText}>
-                  Another message that I received here will be shown here.
-                  This is a test message that shows if my construction of this
-                  chat is good enough for production.
+                  Another message that I received here will be shown here. This
+                  is a test message that shows if my construction of this chat
+                  is good enough for production.
                 </Col>
 
                 <Col className={styles.chatMessageAction}>
@@ -347,9 +339,7 @@ const AntDesignScreen = () => {
 
             <Col
               span={24}
-              className={
-                styles.chatMessage + " " + styles.chatMessageReceiver
-              }
+              className={styles.chatMessage + " " + styles.chatMessageReceiver}
             >
               <Row className={styles.chatMessageName}>
                 You
@@ -383,9 +373,7 @@ const AntDesignScreen = () => {
 
             <Col
               span={24}
-              className={
-                styles.chatMessage + " " + styles.chatMessageReceiver
-              }
+              className={styles.chatMessage + " " + styles.chatMessageReceiver}
             >
               <Row className={styles.chatMessageName}>
                 You

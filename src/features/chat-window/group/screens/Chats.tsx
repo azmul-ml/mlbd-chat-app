@@ -11,14 +11,14 @@ import { sendMessage } from "../redux/send-message.slice";
 
 export default function Chats({ groupItem }: any) {
   const dispatch = useAppDispatch();
-  const singleGroup: any = useAppSelector((state) => state.singleGroup);
+  const singleGroup: any = useAppSelector((state: any) => state.singleGroup);
   const [message, setMessage] = useState("");
   const handleMessageChange = (e: any) => {
     setMessage(e.target.value);
   };
 
   const handleSentMessage = () => {
-    console.log(singleGroup);
+    // console.log(singleGroup);
     const token = cookie.load(AUTH_ACCESS_TOKEN);
     const data: ISentMessage = {
       group_id: singleGroup.id,

@@ -33,40 +33,27 @@ export const chatClient = createSlice({
   },
 });
 
-const handleSubscriptions = (client: any) => {
-  const { init } = onMessageRecieveSlice.actions;
-  // dispatch(init(client));
-  store.dispatch(init(client));
-  console.log(store);
-  // dispatch.onMessageRead.init(client);
-  // dispatch.onAddedToGroup.init(client);
-  // dispatch.onGroupUpdated.init(client);
-  // dispatch.onGroupDeleted.init(client);
-  // dispatch.onMessageUpdated.init(client);
-  // dispatch.onMessageDeleted.init(client);
-  // dispatch.onGroupMemberAdded.init(client);
-  // dispatch.onSavedMessageAdded.init(client);
-  // dispatch.onGroupMemberRemoved.init(client);
-  // dispatch.onPinnedMessageAdded.init(client);
-  // dispatch.onSavedMessageRemoved.init(client);
-  // dispatch.onPinnedMessageRemoved.init(client);
+const handleSubscriptions = (client: any, dispatch: any) => {
+  client.onMessageRecieved((res: any) =>
+    dispatch(onMessageRecieveSlice.actions.init(res))
+  );
 };
-export const exClientChatTh = createAsyncThunk(
-  "chat/client",
-  () => (dispatch: any) => {
-    initialClient = new ChatClient({
-      chatApiEndpoint: "http://localhost:3000",
-      tokenProvider,
-      pusherOptions,
-    });
-    console.log(initialClient, tokenProvider);
-    // initialClient.on;/
+// export const exClientChatTh = createAsyncThunk(
+//   "chat/client",
+//   () => (dispatch: any) => {
+//     initialClient = new ChatClient({
+//       chatApiEndpoint: "http://localhost:3000",
+//       tokenProvider,
+//       pusherOptions,
+//     });
+//     console.log(initialClient, tokenProvider);
+//     // initialClient.on;/
 
-    initialClient.connect().then(() => {
-      handleSubscriptions(initialClient);
-    });
-  }
-);
+//     initialClient.connect().then(() => {
+//       handleSubscriptions(initialClient);
+//     });
+//   }
+// );
 
 // export const loginThunk = createAsyncThunk(
 //   "auth/login",
@@ -81,18 +68,19 @@ export const exClientChatTh = createAsyncThunk(
 //     )
 // );
 
-export const exClientChat = () => {
+export const exClientChat = () => (dispatch: any) => {
   // const dispatch = useAppDispatch();
+  const { init } = onMessageRecieveSlice.actions;
+
   console.log("dddddddddddd");
   initialClient = new ChatClient({
     chatApiEndpoint: "http://localhost:3000",
     tokenProvider,
     pusherOptions,
   });
-  console.log(initialClient, tokenProvider);
   // initialClient.on;/
 
   initialClient.connect().then(() => {
-    handleSubscriptions(initialClient);
+    handleSubscriptions(initialClient, dispatch);
   });
 };
