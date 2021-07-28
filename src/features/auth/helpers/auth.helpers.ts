@@ -9,7 +9,6 @@ import { CookieTokenDef } from "../types/auth.types";
  */
 export const getTokens = () => {
   const value: CookieTokenDef = cookie.load(AUTH_ACCESS_TOKEN);
-  console.log(value);
 
   const current = new Date();
   const expiry = new Date(value?.expiresAt);

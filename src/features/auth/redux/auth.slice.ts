@@ -4,6 +4,7 @@ import cookie from "react-cookies";
 import { loginApi, registerApi } from "../api/auth.api";
 import { AUTH_ACCESS_TOKEN } from "../constants/auth.keys";
 import { LoginCredentials, RegistrationCredentials } from "../types/auth.types";
+
 const initialState = {
   username: "",
   email: "",
@@ -11,13 +12,8 @@ const initialState = {
   isSuccess: false,
   isError: false,
   errormessage: "",
+  data: {},
 };
-
-export const authSlice = createSlice({
-  name: "user",
-  initialState,
-  reducers: {},
-});
 
 export const loginUser = createAsyncThunk(
   "auth/login",
@@ -32,10 +28,21 @@ export const loginUser = createAsyncThunk(
     )
 );
 
+export const authSlice = createSlice({
+  name: "user",
+  initialState,
+  reducers: {},
+  extraReducers: {
+    [loginUser.fulfilled.toString()]: (state, action) => {
+      state.data = action.payload.data;
+    },
+  },
+});
+
 export const registerUser = createAsyncThunk(
   "auth/register",
   (credentials: RegistrationCredentials, { dispatch }) =>
-  registerApi(credentials).then(
+    registerApi(credentials).then(
       (res) => {
         // console.log(res);
         // cookie.save(AUTH_ACCESS_TOKEN, res.data.token, {});
@@ -46,5 +53,3 @@ export const registerUser = createAsyncThunk(
 );
 
 export default authSlice.reducer;
-
-

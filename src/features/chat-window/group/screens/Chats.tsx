@@ -1,6 +1,6 @@
 import { Button, Col, List, Row } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cookie from "react-cookies";
 import { AppIcons, msgActButtons } from "../../AppIcons";
 import styles from "../../layout.module.scss";
@@ -8,18 +8,21 @@ import { IGetSingleGroup, ISentMessage } from "../types/groput-chat.types";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { AUTH_ACCESS_TOKEN } from "../../../auth/constants/auth.keys";
 import { sendMessage } from "../redux/send-message.slice";
+import { getGroupMessages } from "../redux/get.group.messages.slice";
 
 export default function Chats({ groupItem }: any) {
   const dispatch = useAppDispatch();
   const singleGroup: any = useAppSelector((state: any) => state.singleGroup);
+  const userData = useAppSelector((state: any) => state.auth.data);
   const [message, setMessage] = useState("");
+  const [messageList, setMessageList] = useState([]);
   const handleMessageChange = (e: any) => {
     setMessage(e.target.value);
   };
+  const token = cookie.load(AUTH_ACCESS_TOKEN);
 
   const handleSentMessage = () => {
     // console.log(singleGroup);
-    const token = cookie.load(AUTH_ACCESS_TOKEN);
     const data: ISentMessage = {
       group_id: singleGroup.id,
       message: message,
@@ -27,6 +30,19 @@ export default function Chats({ groupItem }: any) {
     };
     dispatch(sendMessage(data));
   };
+
+  const getMessages = async () => {
+    const data: IGetSingleGroup = {
+      group_id: singleGroup.id,
+      token: token,
+    };
+    const response = await dispatch(getGroupMessages(data));
+    setMessageList(response.payload);
+  };
+
+  useEffect(() => {
+    getMessages();
+  }, []);
 
   return (
     <>
@@ -39,7 +55,7 @@ export default function Chats({ groupItem }: any) {
               <span>January 1, 2020</span>
             </Col>
           </Row>
-
+          {console.log(userData)}
           <Row className={styles.chatMessageTextPanel}>
             <Col className={styles.chatMessageText}>
               Hello what's up? jolkjl lal oasfladsfj alsdf adsf ads adsfjadlsfj

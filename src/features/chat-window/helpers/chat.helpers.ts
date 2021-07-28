@@ -2,6 +2,7 @@ import { TokenProvider } from "@mlbd/chat-client";
 import cookie from "react-cookies";
 import { ENV } from "../../../constants/env";
 import { AUTH_ACCESS_TOKEN } from "../../auth/constants/auth.keys";
+import { onMessageRecieveSlice } from "../redux/onMessageRecieve";
 
 const getAccessToken = async () => {
   const token = await cookie.load(AUTH_ACCESS_TOKEN);
@@ -35,4 +36,10 @@ export const pusherOptions = {
   appKey: "91b3fe78f65fb4acdaca",
   cluster: "ap1",
   forceTLS: true,
+};
+
+export const handleSubscriptions = (client: any, dispatch: any) => {
+  client.onMessageRecieved((res: any) =>
+    dispatch(onMessageRecieveSlice.actions.init(res))
+  );
 };

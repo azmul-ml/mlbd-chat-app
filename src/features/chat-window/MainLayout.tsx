@@ -24,11 +24,7 @@ import Modal from "./group/screens/Modal";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { getSingleGroup } from "./group/redux/get-single-group.slice";
 import Title from "antd/lib/typography/Title";
-import {
-  chatClient,
-  exClientChat,
-  // exClientChatTh,
-} from "../chat-window/redux/chat-client.slice";
+import { ClientChat } from "../chat-window/redux/chat-client.slice";
 import { AUTH_ACCESS_TOKEN } from "../auth/constants/auth.keys";
 import Chats from "./group/screens/Chats";
 import {
@@ -101,14 +97,11 @@ export default function MainLayout({ children }: any) {
     const res = await dispatch(getMyGroup(data));
     const groups = res.payload?.filter((d: any) => d.meta !== null);
     setMyGroups(groups);
-    const { initChat } = chatClient.actions;
-    // dispatch(exClientChatTh());
-    // dispatch(initChat());
-    dispatch(exClientChat());
+
+    dispatch(ClientChat());
   };
   useEffect(() => {
     getGroups();
-    // exClientChat();
   }, []);
 
   return (

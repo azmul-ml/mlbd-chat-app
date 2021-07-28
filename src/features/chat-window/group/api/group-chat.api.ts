@@ -25,3 +25,8 @@ export const sendGroupMessageApi = (
   data: ISentMessage
 ): Promise<AxiosResponse> =>
   api.post(`${ChatEndpointsEnum.SEND_MESSAGE}`, data);
+
+export const getGroupMessagesApi = (
+  data: IGetSingleGroup
+): Promise<AxiosResponse> =>
+  api.post(`${ChatEndpointsEnum.GET_GROUP_MESSAGES}`, data);

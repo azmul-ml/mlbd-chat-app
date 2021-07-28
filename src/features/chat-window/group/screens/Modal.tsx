@@ -35,8 +35,6 @@ export default function Modal({
     const users = await dispatch(getUsers());
     dispatch(addUser(users.payload.data));
     setUsers(users.payload.data);
-
-    console.log(users);
   };
   function handleSChange(value: any) {
     setSelectedUser(value);
@@ -57,7 +55,6 @@ export default function Modal({
         onRequestClose={onRequestClose}
       >
         <h3>Create Group</h3>
-        {console.log(users)}
         <Formik
           initialValues={{ name: "" }}
           onSubmit={(values, { setSubmitting }) => {
