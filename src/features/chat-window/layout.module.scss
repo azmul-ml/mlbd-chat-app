@@ -1,3 +1,5 @@
+/* Styles start Mamun */
+
 .chat {
   &Start {
     bottom: 0;
@@ -16,26 +18,17 @@
   }
 
   &Main {
-    border: 1px solid #eee;
     bottom: 0;
     display: flex;
-    height: 800px;
-    margin: auto;
-    width: 900px;
+    height: 100vh;
 
     &Fullscreen {
-      height: calc(100% - 30px);
-      left: 0;
-      position: fixed;
-      width: 100%;
-      z-index: 99;
-
       .chatClose {
         top: -32px;
 
         button {
           font-size: 22px;
-          height: 30px;
+          height: 36px;
         }
       }
     }
@@ -43,7 +36,6 @@
 
   &Left {
     background: #0e3752;
-    max-width: 300px;
 
     &Header {
       background: #0b2e45;
@@ -54,7 +46,7 @@
 
     &Avatar {
       border: 2px solid #ffffff;
-      margin: -20px 10px 0 0;
+      margin-right: 20px;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     }
 
@@ -70,7 +62,7 @@
     }
 
     &Details {
-      height: calc(100% - 66px);
+      height: calc(100vh - 94px);
       overflow: auto;
 
       &Header {
@@ -269,10 +261,9 @@
     }
   }
 
-  &Close {
-    position: absolute;
-    right: 0;
-    top: -25px;
+  &WindowActBtns {
+    align-self: flex-end;
+    background: #5f5f5f;
 
     button {
       background: #fff;
@@ -280,7 +271,8 @@
       border-radius: 0;
       margin: 0 0 0 1px;
       padding: 0 6px;
-      color: #919191;
+      color: #5f5f5f;
+      background: #cccccc;
       height: 24px;
       transition: 0s;
     }
@@ -292,7 +284,7 @@
     background: #fff;
     flex-flow: column;
     flex: 1;
-    position: relative;
+    height: 100vh;
 
     &Header {
       align-items: center;
@@ -300,6 +292,8 @@
       display: flex;
       justify-content: space-between;
       padding: 7px 20px;
+      border-top: 1px solid #efefef;
+      border-bottom: 1px solid #efefef;
 
       &Title {
         align-items: center;
@@ -329,7 +323,7 @@
   }
 
   &Window {
-    flex: 1;
+    flex: 1 1 calc(100vh - 148px);
     overflow: auto;
     padding: 20px 0;
   }
@@ -503,9 +497,6 @@
       justify-content: space-between;
       padding: 5px 20px;
 
-      &Editor {
-      }
-
       &Attachments {
         button {
           color: #666;
@@ -525,4 +516,23 @@
   margin: 0 !important;
   padding: 5px 20px;
   resize: none;
+}
+
+/* Styles start Mamun */
+
+/* some helper classes */
+.chBlock {
+  display: block;
+}
+.chTable {
+  display: table;
+}
+.chInline {
+  display: inline;
+  &Block {
+    display: inline-block;
+  }
+  &Flex {
+    display: inline-flex;
+  }
 }

@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { AUTH_ACCESS_TOKEN } from "../../../auth/constants/auth.keys";
 import { sendMessage } from "../redux/send-message.slice";
 import { getGroupMessages } from "../redux/get.group.messages.slice";
+import MessageBlock from "./MessageBlock";
 
 export default function Chats({ groupItem }: any) {
   const dispatch = useAppDispatch();
@@ -47,70 +48,7 @@ export default function Chats({ groupItem }: any) {
   return (
     <>
       <Row className={styles.chatWindow}>
-        <Col span={24} className={styles.chatMessage}>
-          <Row className={styles.chatMessageName}>
-            John Carrey
-            <Col className={styles.chatMessageTime}>
-              <span>10:20pm</span>
-              <span>January 1, 2020</span>
-            </Col>
-          </Row>
-          {console.log(userData)}
-          <Row className={styles.chatMessageTextPanel}>
-            <Col className={styles.chatMessageText}>
-              Hello what's up? jolkjl lal oasfladsfj alsdf adsf ads adsfjadlsfj
-              adsfj adslf adsf ads
-            </Col>
-
-            <Col className={styles.chatMessageAction}>
-              {AppIcons.MoreOutlined}
-
-              <List
-                className={styles.chatMessageActionItems}
-                dataSource={msgActButtons}
-                renderItem={(item: any) => (
-                  <List.Item>
-                    <Button type="link" icon={item.ico}></Button>
-                  </List.Item>
-                )}
-              />
-            </Col>
-          </Row>
-        </Col>
-
-        <Col
-          span={24}
-          className={styles.chatMessage + " " + styles.chatMessageReceiver}
-        >
-          <Row className={styles.chatMessageName}>
-            You
-            <Col className={styles.chatMessageTime}>
-              <span>10:20pm</span>
-              <span>January 1, 2020</span>
-            </Col>
-          </Row>
-
-          <Row className={styles.chatMessageTextPanel}>
-            <Col className={styles.chatMessageText}>
-              Hello what's up? jolkjl lal oasfladsfj alsdf adsf ads adsfjadlsfj
-              adsfj adslf adsf ads
-            </Col>
-
-            <Col className={styles.chatMessageAction}>
-              {AppIcons.MoreOutlined}
-
-              <List
-                className={styles.chatMessageActionItems}
-                dataSource={msgActButtons}
-                renderItem={(item) => (
-                  <List.Item>
-                    <Button type="link" icon={item.ico}></Button>
-                  </List.Item>
-                )}
-              />
-            </Col>
-          </Row>
-        </Col>
+        <MessageBlock messages={messageList} userData={userData} />
 
         <Col span={24} className={styles.chatMessageDate}>
           <span>10 September</span>
