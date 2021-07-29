@@ -1,10 +1,11 @@
+import React from "react";
 import { Button, Col, List, Row } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { useState } from "react";
 import cookie from "react-cookies";
 import { AppIcons, msgActButtons } from "../../AppIcons";
 import styles from "../../layout.module.scss";
-import { IGetSingleGroup, ISentMessage } from "../types/groput-chat.types";
+import { ISentMessage } from "../types/groput-chat.types";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { AUTH_ACCESS_TOKEN } from "../../../auth/constants/auth.keys";
 import { sendMessage } from "../redux/send-message.slice";
@@ -99,7 +100,6 @@ export default function Chats({ groupItem }: any) {
         <Col span={24} className={styles.chatMessageDate}>
           <span>10 September</span>
         </Col>
-
         <Col
           span={24}
           className={styles.chatMessage + " " + styles.chatMessageReceiver}

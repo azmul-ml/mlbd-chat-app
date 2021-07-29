@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ReactModal from "react-modal";
 import { Row, Col, Button, Select } from "antd";
 import { Formik } from "formik";
 import { Input } from "formik-antd";
-import cookie from "react-cookies";
 
-import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import { useAppDispatch } from "../../../../app/hooks";
 import createGroupChat from "../api/group-chat.api";
-import { AUTH_ACCESS_TOKEN } from "../../../auth/constants/auth.keys";
 import { ICreateGroupChat } from "../types/groput-chat.types";
 import { getUsers, userSlice } from "../../../users/redux/user.slice";
-import { IGetAllUser } from "../../../users/type/user.types";
 
 const { Option } = Select;
 
@@ -30,22 +27,22 @@ export default function Modal({
 
   const [users, setUsers] = useState([""]);
   const [selectedUser, setSelectedUser] = useState(null);
-  const getUser = async () => {
+
+  const getUser = useCallback(async () => {
     const { addUser } = userSlice.actions;
     const users = await dispatch(getUsers());
     dispatch(addUser(users.payload.data));
     setUsers(users.payload.data);
+  },[dispatch]);
 
-    console.log(users);
-  };
   function handleSChange(value: any) {
     setSelectedUser(value);
   }
-  const setAdminValue = () => {};
+  // const setAdminValue = () => {};
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [getUser]);
 
   return (
     <>

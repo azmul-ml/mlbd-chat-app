@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { ChatClient } from "@mlbd/chat-client";
-import { useAppDispatch } from "../../../app/hooks";
 
 import { tokenProvider, pusherOptions } from "../helpers/chat.helpers";
 import { store } from "../../../app/store";
@@ -19,7 +18,6 @@ export const chatClient = createSlice({
       // if (initialClient) {
       //   return state;
       // }
-      console.log("dddddddddddd", state);
       initialClient = new ChatClient({
         chatApiEndpoint: "http://localhost:3000/",
         tokenProvider,

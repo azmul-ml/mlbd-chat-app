@@ -1,9 +1,6 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {createAsyncThunk } from "@reduxjs/toolkit";
 
 import { getMyGroupList } from "../api/group-chat.api";
-import { ICreateGroupChat } from "../types/groput-chat.types";
-import cookie from "react-cookies";
-import { AUTH_ACCESS_TOKEN } from "../../../auth/constants/auth.keys";
 
 // export const getMyGroup = createAsyncThunk(
 //   "get/group",

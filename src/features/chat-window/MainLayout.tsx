@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import { Link, useHistory } from "react-router-dom";
 
 import {
-  Layout,
-  Menu,
   Avatar,
   Button,
   List,
-  Mentions,
   Row,
   Col,
-  Input,
   Popover,
   Select,
 } from "antd";
@@ -19,7 +15,7 @@ import {
 import cookie from "react-cookies";
 
 import styles from "./layout.module.scss";
-import { AppIcons, msgActButtons } from "./AppIcons";
+import { AppIcons } from "./AppIcons";
 import Modal from "./group/screens/Modal";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { getSingleGroup } from "./group/redux/get-single-group.slice";
@@ -32,24 +28,20 @@ import {
 import { AUTH_ACCESS_TOKEN } from "../auth/constants/auth.keys";
 import Chats from "./group/screens/Chats";
 import {
-  IGetSingleGroup,
   IGroupResponse,
 } from "./group/types/groput-chat.types";
 import { getMyGroup } from "./group/redux/getMy-groups";
 import { singleGroupSlice } from "./group/redux/get-single-group.slice";
 
-const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
-const { TextArea } = Input;
 const { Option } = Select;
 
-const newData = [
-  "Frontend Discussion",
-  "Backend Discussion",
-  "Official Documents",
-  "Chitchat Group",
-  "Financial Documents",
-];
+// const newData = [
+//   "Frontend Discussion",
+//   "Backend Discussion",
+//   "Official Documents",
+//   "Chitchat Group",
+//   "Financial Documents",
+// ];
 
 export default function MainLayout({ children }: any) {
   const dispatch = useAppDispatch();
@@ -57,7 +49,7 @@ export default function MainLayout({ children }: any) {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [myGroups, setMyGroups] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [groupItem, setGroupItem] = useState({});
+  const [groupItem] = useState({});
 
   const allUsers = useAppSelector((state) => state.user);
 
@@ -93,7 +85,7 @@ export default function MainLayout({ children }: any) {
     console.log("search:", val);
   }
 
-  const getGroups = async () => {
+  const getGroups =  useCallback( async () => {
     const token = cookie.load(AUTH_ACCESS_TOKEN);
 
     const data: any = {
@@ -107,11 +99,12 @@ export default function MainLayout({ children }: any) {
     dispatch(initChat());
 
     console.log(res.payload?.filter((d: any) => d.meta !== null));
-  };
+  },[dispatch]);
+
   useEffect(() => {
     getGroups();
     exClientChat();
-  }, []);
+  }, [getGroups]);
 
   return (
     <Row className={styles.chatMain}>

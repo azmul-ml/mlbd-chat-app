@@ -1,9 +1,6 @@
 import { getSingleGroupApi } from "../api/group-chat.api";
-import { ICreateGroupChat } from "../types/groput-chat.types";
-import cookie from "react-cookies";
-import { AUTH_ACCESS_TOKEN } from "../../../auth/constants/auth.keys";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { IGroupResponse } from "../types/groput-chat.types";
+
 
 const initialState = {
   singleGroup: {},
