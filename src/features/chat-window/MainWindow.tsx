@@ -27,7 +27,7 @@ const newData = [
 const AntDesignScreen = () => {
   const cx = classNames.bind(styles);
 
-  const [fullScreen, setFullScreen] = useState(false);
+  const [fullScreen] = useState(false);
 
   return (
     <>

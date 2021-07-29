@@ -1,5 +1,5 @@
-import React from "react";
-import { Formik } from "formik";
+import React, {useState} from "react";
+import { Form, Input, Button, Row, Col } from 'antd';
 import { useHistory, Link } from "react-router-dom";
 
 import { useAppDispatch } from "../../../app/hooks";
@@ -7,57 +7,76 @@ import { loginUser } from "../redux/auth.slice";
 import { LoginCredentials } from "../types/auth.types";
 
 export default function Login() {
+  const [form] = Form.useForm();
   const dispatch = useAppDispatch();
   let history = useHistory();
+  const [isSubmit, setisSubmit] = useState(false);
 
   const handleSubmit = async (values: LoginCredentials) => {
-    const response = await dispatch(loginUser(values));
-    if (response.payload.data) {
-      history.push("/app");
+    try {
+      const response = await dispatch(loginUser(values));
+      if (response.payload.data) {
+        history.push("/app");
+      }
+    } finally {
+      setisSubmit(false);
     }
-    console.log(response.payload.data);
   };
 
   return (
     <div>
-      <h1>Login!</h1>
-      <Formik
-        initialValues={{ email: "", password: "" }}
-        onSubmit={handleSubmit}
-      >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <input
-              type="email"
-              name="email"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-            />
-            {errors.email && touched.email && errors.email}
-            <input
-              type="password"
-              name="password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-            />
-            {errors.password && touched.password && errors.password}
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
-          </form>
-        )}
-      </Formik>
-      <p>Don't have an account? <Link to="/register">Signup</Link> Here</p>
+      <Row justify="center">
+         <Col md={10} sm={24}>
+             <h1>Login!</h1>
+         </Col>
+      </Row>
+
+      <Form
+          name="login"
+          form={form}
+          onFinish={handleSubmit}
+          layout="vertical"
+          initialValues={{ email: "", password: "" }}
+        >
+       <Row justify="center">
+         <Col md={10} sm={24}>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: 'Please input your email!' }]}
+          >
+            <Input type="email" />
+          </Form.Item>
+        </Col>
+        </Row>
+        <Row justify="center">
+         <Col md={10} sm={24}>
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: 'Please input your password!' }]}
+          >
+            <Input.Password />
+          </Form.Item>
+          </Col>
+        </Row>
+
+        <Row justify="center">
+         <Col md={10} sm={24}>
+          <Form.Item>
+            <Button type="primary" loading={isSubmit} htmlType="submit">
+              Login
+            </Button>
+          </Form.Item>
+          </Col>
+        </Row>
+          
+      </Form>
+      <Row justify="center">
+         <Col md={10} sm={24}>
+           <p>Don't have an account? <Link to="/register">Signup</Link> Here</p>
+      </Col>
+        </Row>
     </div>
   );
 }

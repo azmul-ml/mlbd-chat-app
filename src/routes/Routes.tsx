@@ -1,3 +1,4 @@
+import React from "react";
 import { Redirect } from "react-router";
 import cookie from "react-cookies";
 
@@ -7,7 +8,6 @@ import MainLayout from "../features/chat-window/MainLayout";
 import MainWindow from "../features/chat-window/MainWindow";
 import { AUTH_ACCESS_TOKEN } from "../features/auth/constants/auth.keys";
 import { RenderRoutes } from ".";
-import Chats from "../features/chat-window/group/screens/Chats";
 
 const ROUTES = [
   { path: "/", key: "ROOT", exact: true, component: Login },

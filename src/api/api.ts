@@ -35,26 +35,26 @@ const authInterceptor = async (request: AxiosRequestConfig) => {
   return request;
 };
 
-const authInterceptor2 = async (request: AxiosRequestConfig) => {
-  const { accessToken } = getTokens();
+// const authInterceptor2 = async (request: AxiosRequestConfig) => {
+//   const { accessToken } = getTokens();
 
-  const isAnonymous = anonymousEndpoints.some((endpoint) =>
-    request.url?.startsWith(endpoint)
-  );
+//   const isAnonymous = anonymousEndpoints.some((endpoint) =>
+//     request.url?.startsWith(endpoint)
+//   );
 
-  if (accessToken) {
-    request.headers.Authorization = `bearer ${accessToken}`;
-    return request;
-  }
+//   if (accessToken) {
+//     request.headers.Authorization = `bearer ${accessToken}`;
+//     return request;
+//   }
 
-  if (!accessToken && !isAnonymous) {
-    // TODO: handle when UNAUTHORIZED;
-    // return Promise.reject(ApiStatusCodes.UNAUTHORIZED);
-    return request;
-  }
+//   if (!accessToken && !isAnonymous) {
+//     // TODO: handle when UNAUTHORIZED;
+//     // return Promise.reject(ApiStatusCodes.UNAUTHORIZED);
+//     return request;
+//   }
 
-  return request;
-};
+//   return request;
+// };
 
 // /** Setup an API instance */
 export const api = axios.create({

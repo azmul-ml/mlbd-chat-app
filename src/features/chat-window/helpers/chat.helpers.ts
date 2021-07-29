@@ -1,13 +1,12 @@
 import { TokenProvider } from "@mlbd/chat-client";
 import cookie from "react-cookies";
-import { ENV } from "../../../constants/env";
 import { AUTH_ACCESS_TOKEN } from "../../auth/constants/auth.keys";
 import { onMessageRecieveSlice } from "../redux/onMessageRecieve";
 
-const getAccessToken = async () => {
-  const token = await cookie.load(AUTH_ACCESS_TOKEN);
-  return token;
-};
+// const getAccessToken = async () => {
+//   const token = await cookie.load(AUTH_ACCESS_TOKEN);
+//   return token;
+// };
 
 /**
  * Token provider for chat client init
