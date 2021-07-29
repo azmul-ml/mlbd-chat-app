@@ -1,0 +1,24 @@
+@import "~antd/dist/antd.css";
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+img {
+  max-width: 100%;
+}
+
+// some helper classes
+.chBlock {
+  display: block;
+}
+.chTable {
+  display: table;
+}

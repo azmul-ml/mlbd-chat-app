@@ -11,12 +11,18 @@ import { sendMessage } from "../redux/send-message.slice";
 import { getGroupMessages } from "../redux/get.group.messages.slice";
 import MessageBlock from "./MessageBlock";
 
+// const arr: Messages[] = []
+
 export default function Chats({ groupItem }: any) {
   const dispatch = useAppDispatch();
   const singleGroup: any = useAppSelector((state: any) => state.singleGroup);
   const userData = useAppSelector((state: any) => state.auth.data);
+  const instantText: any | null = useAppSelector(
+    (state: any) => state.onMessageRecieve
+  );
   const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
+  const [newMessages, setNewMessages] = useState<object>([]);
   const handleMessageChange = (e: any) => {
     setMessage(e.target.value);
   };
@@ -45,238 +51,22 @@ export default function Chats({ groupItem }: any) {
     getMessages();
   }, []);
 
+  useEffect(() => {
+    let allMessages = [...messageList];
+    console.log([instantText, ...allMessages]);
+    setNewMessages([instantText, ...allMessages].reverse());
+  }, [instantText]);
+
   return (
     <>
       <Row className={styles.chatWindow}>
-        <MessageBlock messages={messageList} userData={userData} />
+        <MessageBlock messages={newMessages} userData={userData} />
 
         <Col span={24} className={styles.chatMessageDate}>
           <span>10 September</span>
         </Col>
-
-        <Col
-          span={24}
-          className={styles.chatMessage + " " + styles.chatMessageReceiver}
-        >
-          <Row className={styles.chatMessageName}>
-            You
-            <Col className={styles.chatMessageTime}>
-              <span>3:34pm</span>
-              <span>June 7, 2020</span>
-            </Col>
-          </Row>
-
-          <Row className={styles.chatMessageTextPanel}>
-            <Col className={styles.chatMessageText}>
-              This is a sample message to show how does it look.
-            </Col>
-
-            <Col className={styles.chatMessageAction}>
-              {AppIcons.MoreOutlined}
-
-              <List
-                className={styles.chatMessageActionItems}
-                dataSource={msgActButtons}
-                renderItem={(item) => (
-                  <List.Item>
-                    <Button type="link" icon={item.ico}></Button>
-                  </List.Item>
-                )}
-              />
-            </Col>
-          </Row>
-        </Col>
-
-        <Col span={24} className={styles.chatMessage}>
-          <Row className={styles.chatMessageName}>
-            John Carrey
-            <Col className={styles.chatMessageTime}>
-              <span>4:12pm</span>
-              <span>June 8, 2021</span>
-            </Col>
-          </Row>
-
-          <Row className={styles.chatMessageTextPanel}>
-            <Col className={styles.chatMessageText}>
-              This is the message that I received
-            </Col>
-
-            <Col className={styles.chatMessageAction}>
-              {AppIcons.MoreOutlined}
-
-              <List
-                className={styles.chatMessageActionItems}
-                dataSource={msgActButtons}
-                renderItem={(item) => (
-                  <List.Item>
-                    <Button type="link" icon={item.ico}></Button>
-                  </List.Item>
-                )}
-              />
-            </Col>
-          </Row>
-        </Col>
-
-        <Col span={24} className={styles.chatMessage}>
-          <Row className={styles.chatMessageName}>
-            John Carrey
-            <Col className={styles.chatMessageTime}>
-              <span>4:12pm</span>
-              <span>June 8, 2021</span>
-            </Col>
-          </Row>
-
-          <Row className={styles.chatMessageTextPanel}>
-            <Col className={styles.chatMessageText}>
-              Another message that I received here will be shown here. This is a
-              test message that shows if my construction of this chat is good
-              enough for production.
-            </Col>
-
-            <Col className={styles.chatMessageAction}>
-              {AppIcons.MoreOutlined}
-
-              <List
-                className={styles.chatMessageActionItems}
-                dataSource={msgActButtons}
-                renderItem={(item) => (
-                  <List.Item>
-                    <Button type="link" icon={item.ico}></Button>
-                  </List.Item>
-                )}
-              />
-            </Col>
-          </Row>
-        </Col>
-
-        <Col
-          span={24}
-          className={styles.chatMessage + " " + styles.chatMessageReceiver}
-        >
-          <Row className={styles.chatMessageName}>
-            You
-            <Col className={styles.chatMessageTime}>
-              <span>3:34pm</span>
-              <span>June 7, 2020</span>
-            </Col>
-          </Row>
-
-          <Row className={styles.chatMessageTextPanel}>
-            <Col className={styles.chatMessageText}>
-              Hey what's up? How's your life going? Can you see this text
-              message that's coming from me?
-            </Col>
-
-            <Col className={styles.chatMessageAction}>
-              {AppIcons.MoreOutlined}
-
-              <List
-                className={styles.chatMessageActionItems}
-                dataSource={msgActButtons}
-                renderItem={(item) => (
-                  <List.Item>
-                    <Button type="link" icon={item.ico}></Button>
-                  </List.Item>
-                )}
-              />
-            </Col>
-          </Row>
-        </Col>
-
-        <Col
-          span={24}
-          className={styles.chatMessage + " " + styles.chatMessageReceiver}
-        >
-          <Row className={styles.chatMessageName}>
-            You
-            <Col className={styles.chatMessageTime}>
-              <span>3:34pm</span>
-              <span>June 7, 2020</span>
-            </Col>
-          </Row>
-
-          <Row className={styles.chatMessageTextPanel}>
-            <Col className={styles.chatMessageText}>
-              Or you want me to send it again?
-            </Col>
-
-            <Col className={styles.chatMessageAction}>
-              {AppIcons.MoreOutlined}
-
-              <List
-                className={styles.chatMessageActionItems}
-                dataSource={msgActButtons}
-                renderItem={(item) => (
-                  <List.Item>
-                    <Button type="link" icon={item.ico}></Button>
-                  </List.Item>
-                )}
-              />
-            </Col>
-          </Row>
-        </Col>
-
-        <Col span={24} className={styles.chatMessage}>
-          <Row className={styles.chatMessageName}>
-            John Carrey
-            <Col className={styles.chatMessageTime}>
-              <span>4:12pm</span>
-              <span>June 8, 2021</span>
-            </Col>
-          </Row>
-
-          <Row className={styles.chatMessageTextPanel}>
-            <Col className={styles.chatMessageText}>
-              Yes I can see your text
-            </Col>
-
-            <Col className={styles.chatMessageAction}>
-              {AppIcons.MoreOutlined}
-
-              <List
-                className={styles.chatMessageActionItems}
-                dataSource={msgActButtons}
-                renderItem={(item) => (
-                  <List.Item>
-                    <Button type="link" icon={item.ico}></Button>
-                  </List.Item>
-                )}
-              />
-            </Col>
-          </Row>
-        </Col>
-
-        <Col span={24} className={styles.chatMessage}>
-          <Row className={styles.chatMessageName}>
-            John Carrey
-            <Col className={styles.chatMessageTime}>
-              <span>4:12pm</span>
-              <span>June 8, 2021</span>
-            </Col>
-          </Row>
-
-          <Row className={styles.chatMessageTextPanel}>
-            <Col className={styles.chatMessageText}>
-              Maybe the connection is troubling.
-            </Col>
-
-            <Col className={styles.chatMessageAction}>
-              {AppIcons.MoreOutlined}
-
-              <List
-                className={styles.chatMessageActionItems}
-                dataSource={msgActButtons}
-                renderItem={(item) => (
-                  <List.Item>
-                    <Button type="link" icon={item.ico}></Button>
-                  </List.Item>
-                )}
-              />
-            </Col>
-          </Row>
-        </Col>
       </Row>
-
+      {console.log(newMessages)}
       <Row className={styles.chatComposePanel}>
         <form>
           <Col className={styles.chatCompose}>
