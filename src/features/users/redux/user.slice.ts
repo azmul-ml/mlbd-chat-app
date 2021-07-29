@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { IGetAllUser } from "../type/user.types";
-import getUsersApi from "../api/user.api";
+import getUsersApi, { getSingleUserApi } from "../api/user.api";
 
 const initialState: IGetAllUser[] = [
   {
@@ -31,6 +31,18 @@ export const getUsers = createAsyncThunk("get/user", () =>
     },
     (err) => err.message
   )
+);
+
+export const getSingleUser = createAsyncThunk(
+  "get/sigleUser",
+  (userID: string) =>
+    getSingleUserApi(userID).then(
+      (res) => {
+        // dispatch()
+        return res.data;
+      },
+      (err) => err.message
+    )
 );
 
 export default userSlice.reducer;

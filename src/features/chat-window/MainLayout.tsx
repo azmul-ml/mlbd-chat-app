@@ -50,6 +50,8 @@ const newData = [
 export default function MainLayout({ children }: any) {
   const dispatch = useAppDispatch();
   let history = useHistory();
+  const userData = useAppSelector((state: any) => state.auth.data);
+
   const [modalIsOpen, setIsOpen] = useState(false);
   const [myGroups, setMyGroups] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -112,7 +114,7 @@ export default function MainLayout({ children }: any) {
 
           <Col className={styles.chatLeftName}>
             <Title level={4} className={styles.chatLeftTitle}>
-              Mamun Khandaker
+              {userData.name}
             </Title>
             <Col span={24} className={styles.chatStatus}>
               <span
@@ -239,7 +241,8 @@ export default function MainLayout({ children }: any) {
             </div>
 
             <Col className={styles.chatRightHeaderTitleText}>
-              John Carrey
+              {userData.name}
+
               <Col className={styles.chatStatus}>
                 <span
                   className={

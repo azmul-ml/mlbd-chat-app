@@ -12,5 +12,11 @@ const getUsersApi = (): Promise<AxiosResponse> =>
       "auth-token": `${cookie.load(AUTH_ACCESS_TOKEN)}`,
     },
   });
+export const getSingleUserApi = (userID: string): Promise<AxiosResponse> =>
+  apiAuth.get(`${userID}`, {
+    headers: {
+      "auth-token": `${cookie.load(AUTH_ACCESS_TOKEN)}`,
+    },
+  });
 
 export default getUsersApi;

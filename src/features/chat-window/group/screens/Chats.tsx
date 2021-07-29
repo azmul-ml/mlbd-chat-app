@@ -13,6 +13,20 @@ import MessageBlock from "./MessageBlock";
 
 // const arr: Messages[] = []
 
+interface IMessage {
+  group_id: string;
+  id: string;
+  mentions: [];
+  message: string;
+  // parent_message: {attachments: Array(0), id: "", message: "", sender_id: ""}
+  // parent_message_id: ""
+  // recipients: (3) [{…}, {…}, {…}]
+  // reply_count: 0
+  sender_id: string;
+  sent_at: string;
+  updated_at: string;
+}
+
 export default function Chats({ groupItem }: any) {
   const dispatch = useAppDispatch();
   const singleGroup: any = useAppSelector((state: any) => state.singleGroup);
@@ -21,11 +35,12 @@ export default function Chats({ groupItem }: any) {
     (state: any) => state.onMessageRecieve
   );
   const [message, setMessage] = useState("");
-  const [messageList, setMessageList] = useState([]);
+  const [messageList, setMessageList] = useState<IMessage[]>([]);
   const [newMessages, setNewMessages] = useState<object>([]);
   const handleMessageChange = (e: any) => {
     setMessage(e.target.value);
   };
+
   const token = cookie.load(AUTH_ACCESS_TOKEN);
 
   const handleSentMessage = () => {
@@ -44,7 +59,8 @@ export default function Chats({ groupItem }: any) {
       token: token,
     };
     const response = await dispatch(getGroupMessages(data));
-    setMessageList(response.payload);
+    console.log(response.payload);
+    response.payload && setMessageList([...response.payload].reverse());
   };
 
   useEffect(() => {
@@ -53,20 +69,26 @@ export default function Chats({ groupItem }: any) {
 
   useEffect(() => {
     let allMessages = [...messageList];
-    console.log([instantText, ...allMessages]);
-    setNewMessages([instantText, ...allMessages].reverse());
+    if (instantText) {
+      // console.log([instantText, ...allMessages]);
+
+      setNewMessages([...allMessages, instantText]);
+    }
   }, [instantText]);
 
   return (
     <>
       <Row className={styles.chatWindow}>
-        <MessageBlock messages={newMessages} userData={userData} />
+        <MessageBlock
+          messages={instantText ? newMessages : messageList}
+          userData={userData}
+        />
 
-        <Col span={24} className={styles.chatMessageDate}>
+        {/* <Col span={24} className={styles.chatMessageDate}>
           <span>10 September</span>
-        </Col>
+        </Col> */}
       </Row>
-      {console.log(newMessages)}
+      {console.log("dddddd", newMessages)}
       <Row className={styles.chatComposePanel}>
         <form>
           <Col className={styles.chatCompose}>
