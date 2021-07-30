@@ -1,7 +1,6 @@
 import { getSingleGroupApi } from "../api/group-chat.api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-
 const initialState = {
   singleGroup: {},
 };

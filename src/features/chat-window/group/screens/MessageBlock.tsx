@@ -14,7 +14,6 @@ export default function MessageBlock({ messages, userData }: any) {
 
   return (
     <div>
-      {console.log(messages)}
       {messages?.map((message: any) =>
         message.sender_id === userData.user_id ? (
           <Col

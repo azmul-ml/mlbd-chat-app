@@ -18,16 +18,7 @@ import Chats from "./group/screens/Chats";
 import { IGroupResponse } from "./group/types/groput-chat.types";
 import { getMyGroup } from "./group/redux/getMy-groups";
 import { singleGroupSlice } from "./group/redux/get-single-group.slice";
-
-const { Option } = Select;
-
-// const newData = [
-//   "Frontend Discussion",
-//   "Backend Discussion",
-//   "Official Documents",
-//   "Chitchat Group",
-//   "Financial Documents",
-// ];
+import AddMember from "./components/AddMember";
 
 export default function MainLayout({ children }: any) {
   const dispatch = useAppDispatch();
@@ -85,6 +76,7 @@ export default function MainLayout({ children }: any) {
 
   useEffect(() => {
     getGroups();
+    dispatch(ClientChat());
   }, [getGroups]);
 
   return (
@@ -240,29 +232,7 @@ export default function MainLayout({ children }: any) {
             <Button type="link" icon={AppIcons.PhoneFilled}></Button>
             <Popover
               content={
-                <Select
-                  showSearch
-                  mode="multiple"
-                  style={{ width: 200 }}
-                  placeholder="Select a person"
-                  optionFilterProp="children"
-                  onChange={onChange}
-                  // onFocus={onFocus}
-                  // onBlur={onBlur}
-                  onSearch={onSearch}
-                  filterOption={(input, option: any) =>
-                    option.children
-                      .toLowerCase()
-                      .indexOf(input.toLowerCase()) >= 0
-                  }
-                >
-                  {allUsers?.map((user: any) => (
-                    <Option value={user._id}>{user.name}</Option>
-                  ))}
-                  {/* <Option value="jack">Jack</Option>
-                  <Option value="lucy">Lucy</Option>
-                  <Option value="tom">Tom</Option> */}
-                </Select>
+                <AddMember allUsers={allUsers} setVisible={setVisible} />
               }
               title="Title"
               trigger="click"

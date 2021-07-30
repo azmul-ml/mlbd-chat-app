@@ -38,7 +38,8 @@ export const pusherOptions = {
 };
 
 export const handleSubscriptions = (client: any, dispatch: any) => {
-  client.onMessageRecieved((res: any) =>
-    dispatch(onMessageRecieveSlice.actions.init(res))
-  );
+  client.onMessageRecieved((res: any) => {
+    dispatch(onMessageRecieveSlice.actions.init(res));
+    console.log(res);
+  });
 };

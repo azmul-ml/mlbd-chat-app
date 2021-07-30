@@ -4,4 +4,5 @@ export enum ChatEndpointsEnum {
   GET_SINGLE_GROUP = "groups.get",
   SEND_MESSAGE = "messages.send",
   GET_GROUP_MESSAGES = "messages.list",
+  ADD_GROUP_MEMBER = "groups.members.add",
 }

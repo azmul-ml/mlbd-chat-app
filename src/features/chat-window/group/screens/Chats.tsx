@@ -5,28 +5,16 @@ import { useEffect, useState } from "react";
 import cookie from "react-cookies";
 import { AppIcons, msgActButtons } from "../../AppIcons";
 import styles from "../../layout.module.scss";
-import { IGetSingleGroup, ISentMessage } from "../types/groput-chat.types";
+import {
+  IGetSingleGroup,
+  IMessage,
+  ISentMessage,
+} from "../types/groput-chat.types";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { AUTH_ACCESS_TOKEN } from "../../../auth/constants/auth.keys";
 import { sendMessage } from "../redux/send-message.slice";
 import { getGroupMessages } from "../redux/get.group.messages.slice";
 import MessageBlock from "./MessageBlock";
-
-// const arr: Messages[] = []
-
-interface IMessage {
-  group_id: string;
-  id: string;
-  mentions: [];
-  message: string;
-  // parent_message: {attachments: Array(0), id: "", message: "", sender_id: ""}
-  // parent_message_id: ""
-  // recipients: (3) [{…}, {…}, {…}]
-  // reply_count: 0
-  sender_id: string;
-  sent_at: string;
-  updated_at: string;
-}
 
 export default function Chats({ groupItem }: any) {
   const dispatch = useAppDispatch();
@@ -45,7 +33,6 @@ export default function Chats({ groupItem }: any) {
   const token = cookie.load(AUTH_ACCESS_TOKEN);
 
   const handleSentMessage = () => {
-    // console.log(singleGroup);
     const data: ISentMessage = {
       group_id: singleGroup.id,
       message: message,
@@ -71,8 +58,6 @@ export default function Chats({ groupItem }: any) {
   useEffect(() => {
     let allMessages = [...messageList];
     if (instantText) {
-      // console.log([instantText, ...allMessages]);
-
       setNewMessages([...allMessages, instantText]);
     }
   }, [instantText]);

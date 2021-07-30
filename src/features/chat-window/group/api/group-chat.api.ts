@@ -2,6 +2,7 @@ import { api } from "../../../../api/api";
 import { AxiosResponse } from "axios";
 import { ChatEndpointsEnum } from "../constants/group-chat.endpoints";
 import {
+  IAddMember,
   ICreateGroupChat,
   IGetSingleGroup,
   ISentMessage,
@@ -30,3 +31,6 @@ export const getGroupMessagesApi = (
   data: IGetSingleGroup
 ): Promise<AxiosResponse> =>
   api.post(`${ChatEndpointsEnum.GET_GROUP_MESSAGES}`, data);
+
+export const addGroupMemberApi = (data: IAddMember): Promise<AxiosResponse> =>
+  api.post(`${ChatEndpointsEnum.ADD_GROUP_MEMBER}`, data);

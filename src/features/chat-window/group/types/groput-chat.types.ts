@@ -25,3 +25,18 @@ export interface ISentMessage {
   message: string;
   token: string;
 }
+
+export interface IAddMember {
+  token: string;
+  group_id: string;
+  user_ids: string[];
+}
+export interface IMessage {
+  group_id: string;
+  id: string;
+  mentions: [];
+  message: string;
+  sender_id: string;
+  sent_at: string;
+  updated_at: string;
+}
