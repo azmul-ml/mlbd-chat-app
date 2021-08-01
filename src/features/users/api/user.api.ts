@@ -1,7 +1,6 @@
 import { apiAuth } from "../../../api/api";
 import { AxiosResponse } from "axios";
 import { UserEndpointsEnum } from "../constants/user.endpoints";
-// import { LoginCredentials } from "../types/auth.types";
 import cookie from "react-cookies";
 import { AUTH_ACCESS_TOKEN } from "../../auth/constants/auth.keys";
 

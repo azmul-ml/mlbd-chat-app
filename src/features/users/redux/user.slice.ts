@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { IGetAllUser } from "../type/user.types";
+import { IAllUserRecieved } from "../type/user.types";
 import getUsersApi, { getSingleUserApi } from "../api/user.api";
 
-const initialState: IGetAllUser[] = [
+const initialState: IAllUserRecieved[] = [
   {
     email: "",
     _id: "",

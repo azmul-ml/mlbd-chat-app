@@ -249,7 +249,7 @@ export default function MainLayout({ children }: any) {
             <Button type="link" icon={AppIcons.InfoCircleFilled}></Button>
           </Col>
         </Row>
-        <Chats groupItem={groupItem} />
+        <Chats />
 
         <Modal
           style={styles}

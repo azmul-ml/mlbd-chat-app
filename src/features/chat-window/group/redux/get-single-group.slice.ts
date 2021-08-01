@@ -2,7 +2,13 @@ import { getSingleGroupApi } from "../api/group-chat.api";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  singleGroup: {},
+  id: "",
+  members: null,
+  meta: {
+    name: "",
+    talk_room_type: "",
+  },
+  status: null,
 };
 export const singleGroupSlice = createSlice({
   name: "single-group",

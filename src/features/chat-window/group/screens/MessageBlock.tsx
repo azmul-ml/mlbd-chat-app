@@ -4,17 +4,23 @@ import { AppIcons, msgActButtons } from "../../AppIcons";
 import styles from "../../layout.module.scss";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import moment from "moment";
+import { RootState } from "../../../../app/store";
+import { IMessageRecieve } from "../types/groput-chat.types";
+import { ILoggedInUse } from "../../../auth/types/auth.types";
+import { IAllUserRecieved } from "../../../users/type/user.types";
 
-export default function MessageBlock({ messages, userData }: any) {
-  const dispatch = useAppDispatch();
-  const users = useAppSelector((state: any) => state.user);
+interface IMessageBLock {
+  messages: IMessageRecieve[];
+  userData: ILoggedInUse;
+}
+
+export default function MessageBlock({ messages, userData }: IMessageBLock) {
+  const users = useAppSelector((state: RootState) => state.user);
   const getSenderData = (senderId: string) =>
-    users.filter((usr: any) => usr._id === senderId);
-  // console.log(users);
-
+    users.filter((usr: IAllUserRecieved) => usr._id === senderId);
   return (
     <div>
-      {messages?.map((message: any) =>
+      {messages?.map((message: IMessageRecieve) =>
         message.sender_id === userData.user_id ? (
           <Col
             span={24}
@@ -23,11 +29,10 @@ export default function MessageBlock({ messages, userData }: any) {
             <Row className={styles.chatMessageName}>
               You
               <Col className={styles.chatMessageTime}>
-                <span>{messages.updated_at}</span>
-                <span>January 1, 2020</span>
+                <span>{moment(message.sent_at).format("h:m:s")}</span>
+                <span>{moment(message.sent_at).format("MMMM Do YYYY")}</span>
               </Col>
             </Row>
-            {console.log(message.sender_id)}
 
             <Row className={styles.chatMessageTextPanel}>
               <Col className={styles.chatMessageText}>{message.message}</Col>
@@ -52,14 +57,12 @@ export default function MessageBlock({ messages, userData }: any) {
             <Row className={styles.chatMessageName}>
               {getSenderData(message.sender_id)[0].name}
               <Col className={styles.chatMessageTime}>
-                <span>{moment(message.updated_at).format("h:m:s")}</span>
-                <span>{moment(message.updated_at).format("MMMM Do YYYY")}</span>
+                <span>{moment(message.sent_at).format("h:m:s")}</span>
+                <span>{moment(message.sent_at).format("MMMM Do YYYY")}</span>
               </Col>
             </Row>
             <Row className={styles.chatMessageTextPanel}>
               <Col className={styles.chatMessageText}>{message.message}</Col>
-              {console.log(message.updated_at)}
-
               <Col className={styles.chatMessageAction}>
                 {AppIcons.MoreOutlined}
 

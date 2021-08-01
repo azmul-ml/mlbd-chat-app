@@ -12,7 +12,12 @@ const initialState = {
   isSuccess: false,
   isError: false,
   errormessage: "",
-  data: {},
+  data: {
+    profile_image_link: null,
+    name: "",
+    email: "",
+    user_id: "",
+  },
 };
 
 export const loginUser = createAsyncThunk(
@@ -20,7 +25,6 @@ export const loginUser = createAsyncThunk(
   (credentials: LoginCredentials, { dispatch }) =>
     loginApi(credentials).then(
       (res) => {
-        console.log(res);
         cookie.save(AUTH_ACCESS_TOKEN, res.data.token, {});
         return res.data;
       },
@@ -44,8 +48,6 @@ export const registerUser = createAsyncThunk(
   (credentials: RegistrationCredentials, { dispatch }) =>
     registerApi(credentials).then(
       (res) => {
-        // console.log(res);
-        // cookie.save(AUTH_ACCESS_TOKEN, res.data.token, {});
         return res.data;
       },
       (err) => err.message

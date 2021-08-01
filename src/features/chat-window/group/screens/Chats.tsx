@@ -7,25 +7,29 @@ import { AppIcons, msgActButtons } from "../../AppIcons";
 import styles from "../../layout.module.scss";
 import {
   IGetSingleGroup,
-  IMessage,
+  IMessageRecieve,
   ISentMessage,
+  ISignleGroup,
 } from "../types/groput-chat.types";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { AUTH_ACCESS_TOKEN } from "../../../auth/constants/auth.keys";
 import { sendMessage } from "../redux/send-message.slice";
 import { getGroupMessages } from "../redux/get.group.messages.slice";
 import MessageBlock from "./MessageBlock";
+import { RootState } from "../../../../app/store";
 
-export default function Chats({ groupItem }: any) {
+export default function Chats() {
   const dispatch = useAppDispatch();
-  const singleGroup: any = useAppSelector((state: any) => state.singleGroup);
-  const userData = useAppSelector((state: any) => state.auth.data);
-  const instantText: any | null = useAppSelector(
-    (state: any) => state.onMessageRecieve
+  const singleGroup: ISignleGroup = useAppSelector(
+    (state: RootState) => state.singleGroup
+  );
+  const userData = useAppSelector((state: RootState) => state.auth.data);
+  const instantText: IMessageRecieve | null = useAppSelector(
+    (state: RootState) => state.onMessageRecieve
   );
   const [message, setMessage] = useState("");
-  const [messageList, setMessageList] = useState<IMessage[]>([]);
-  const [newMessages, setNewMessages] = useState<object>([]);
+  const [messageList, setMessageList] = useState<IMessageRecieve[]>([]);
+  const [newMessages, setNewMessages] = useState<IMessageRecieve[]>([]);
   const handleMessageChange = (e: any) => {
     setMessage(e.target.value);
   };
@@ -66,7 +70,11 @@ export default function Chats({ groupItem }: any) {
     <>
       <Row className={styles.chatWindow}>
         <MessageBlock
-          messages={instantText ? newMessages : messageList}
+          messages={
+            instantText && newMessages.length > messageList.length
+              ? newMessages
+              : messageList
+          }
           userData={userData}
         />
 
@@ -74,7 +82,6 @@ export default function Chats({ groupItem }: any) {
           <span>10 September</span>
         </Col> */}
       </Row>
-      {console.log("dddddd", newMessages)}
       <Row className={styles.chatComposePanel}>
         <form>
           <Col className={styles.chatCompose}>
