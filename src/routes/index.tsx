@@ -1,8 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 
-// import ROUTES from "./routes/Routes";
-
 function RouteWithSubRoutes(route: any) {
   return (
     <Route

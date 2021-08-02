@@ -6,7 +6,6 @@ import cookie from "react-cookies";
 import { AppIcons, msgActButtons } from "../../AppIcons";
 import styles from "../../layout.module.scss";
 import {
-  IGetSingleGroup,
   IMessageRecieve,
   ISentMessage,
   ISignleGroup,
@@ -14,9 +13,9 @@ import {
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { AUTH_ACCESS_TOKEN } from "../../../auth/constants/auth.keys";
 import { sendMessage } from "../redux/send-message.slice";
-import { getGroupMessages } from "../redux/get.group.messages.slice";
 import MessageBlock from "./MessageBlock";
 import { RootState } from "../../../../app/store";
+import { useGetMessages, useSyncRealtipeMessage } from "../../helpers/hooks";
 
 export default function Chats() {
   const dispatch = useAppDispatch();
@@ -24,18 +23,14 @@ export default function Chats() {
     (state: RootState) => state.singleGroup
   );
   const userData = useAppSelector((state: RootState) => state.auth.data);
-  const instantText: IMessageRecieve | null = useAppSelector(
-    (state: RootState) => state.onMessageRecieve
-  );
+  const messageList = useGetMessages();
+  const syncMessages = useSyncRealtipeMessage(messageList);
   const [message, setMessage] = useState("");
-  const [messageList, setMessageList] = useState<IMessageRecieve[]>([]);
-  const [newMessages, setNewMessages] = useState<IMessageRecieve[]>([]);
+
   const handleMessageChange = (e: any) => {
     setMessage(e.target.value);
   };
-
   const token = cookie.load(AUTH_ACCESS_TOKEN);
-
   const handleSentMessage = () => {
     const data: ISentMessage = {
       group_id: singleGroup.id,
@@ -45,42 +40,17 @@ export default function Chats() {
     dispatch(sendMessage(data));
   };
 
-  const getMessages = async () => {
-    const data: IGetSingleGroup = {
-      group_id: singleGroup.id,
-      token: token,
-    };
-    const response = await dispatch(getGroupMessages(data));
-    console.log(response.payload);
-    response.payload && setMessageList([...response.payload].reverse());
-  };
-
-  useEffect(() => {
-    getMessages();
-  }, []);
-
-  useEffect(() => {
-    let allMessages = [...messageList];
-    if (instantText) {
-      setNewMessages([...allMessages, instantText]);
-    }
-  }, [instantText]);
-
   return (
     <>
       <Row className={styles.chatWindow}>
         <MessageBlock
           messages={
-            instantText && newMessages.length > messageList.length
-              ? newMessages
+            syncMessages?.length > messageList?.length
+              ? syncMessages
               : messageList
           }
           userData={userData}
         />
-
-        {/* <Col span={24} className={styles.chatMessageDate}>
-          <span>10 September</span>
-        </Col> */}
       </Row>
       <Row className={styles.chatComposePanel}>
         <form>

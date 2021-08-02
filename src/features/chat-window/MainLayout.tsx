@@ -56,12 +56,12 @@ export default function MainLayout({ children }: any) {
   const handleVisibleChange = (visible: any) => {
     setVisible(true);
   };
-  function onChange(value: any) {
-    console.log(`selected ${value}`);
-  }
-  function onSearch(val: any) {
-    console.log("search:", val);
-  }
+  // function onChange(value: any) {
+  //   console.log(`selected ${value}`);
+  // }
+  // function onSearch(val: any) {
+  //   console.log("search:", val);
+  // }
 
   const getGroups = useCallback(async () => {
     const token = cookie.load(AUTH_ACCESS_TOKEN);

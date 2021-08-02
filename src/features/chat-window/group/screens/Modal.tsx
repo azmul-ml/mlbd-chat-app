@@ -11,11 +11,6 @@ import { getUsers, userSlice } from "../../../users/redux/user.slice";
 
 const { Option } = Select;
 
-// const children: any = [];
-// for (let i = 10; i < 36; i++) {
-//   children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-// }
-
 export default function Modal({
   style,
   isOpen,
@@ -23,7 +18,6 @@ export default function Modal({
   handleGroupModal,
 }: any) {
   const dispatch = useAppDispatch();
-  // const { user }: any = useAppSelector((state) => state.user);
 
   const [users, setUsers] = useState([""]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -38,7 +32,6 @@ export default function Modal({
   function handleSChange(value: any) {
     setSelectedUser(value);
   }
-  // const setAdminValue = () => {};
 
   useEffect(() => {
     getUser();
@@ -47,10 +40,8 @@ export default function Modal({
   return (
     <>
       <ReactModal
-        // title="Basic Modal"
         style={customStyles}
         isOpen={isOpen}
-        // onOk={handleOk}
         onRequestClose={onRequestClose}
       >
         <h3>Create Group</h3>
@@ -70,18 +61,7 @@ export default function Modal({
             handleGroupModal(false);
           }}
         >
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            isSubmitting,
-            setFieldTouched,
-            setFieldValue,
-            /* and other goodies */
-          }) => (
+          {({ errors, touched, handleChange, handleSubmit, isSubmitting }) => (
             <form onSubmit={handleSubmit}>
               <Row gutter={[16, 16]}>
                 <Col className="gutter-row" span={24}>
