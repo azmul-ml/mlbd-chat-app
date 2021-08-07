@@ -1,15 +1,11 @@
 import React from "react";
 import { Button, Col, List, Row } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import cookie from "react-cookies";
 import { AppIcons, msgActButtons } from "../../AppIcons";
 import styles from "../../layout.module.scss";
-import {
-  IMessageRecieve,
-  ISentMessage,
-  ISignleGroup,
-} from "../types/groput-chat.types";
+import { ISentMessage, ISignleGroup } from "../types/groput-chat.types";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { AUTH_ACCESS_TOKEN } from "../../../auth/constants/auth.keys";
 import { sendMessage } from "../redux/send-message.slice";
@@ -27,10 +23,10 @@ export default function Chats() {
   const syncMessages = useSyncRealtipeMessage(messageList);
   const [message, setMessage] = useState("");
 
+  const token = cookie.load(AUTH_ACCESS_TOKEN);
   const handleMessageChange = (e: any) => {
     setMessage(e.target.value);
   };
-  const token = cookie.load(AUTH_ACCESS_TOKEN);
   const handleSentMessage = () => {
     const data: ISentMessage = {
       group_id: singleGroup.id,
