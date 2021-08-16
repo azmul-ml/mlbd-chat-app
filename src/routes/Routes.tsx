@@ -6,6 +6,7 @@ import Login from "../features/auth/components/Login";
 import Register from "../features/auth/components/Register";
 import MainLayout from "../features/chat-window/MainLayout";
 import MainWindow from "../features/chat-window/MainWindow";
+import Settings from "../features/settings/screens/Settings";
 import { AUTH_ACCESS_TOKEN } from "../features/auth/constants/auth.keys";
 import { RenderRoutes } from ".";
 
@@ -41,8 +42,15 @@ const ROUTES = [
         exact: true,
         component: MainLayout,
       },
+      {
+        path: "/app/room/:id/settings",
+        key: "APP_SETTINGS",
+        exact: true,
+        component: Settings,
+      },
     ],
   },
 ];
 
 export default ROUTES;
+
