@@ -2,15 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import { Link, useHistory } from "react-router-dom";
 
-import {
-  Avatar,
-  Button,
-  List,
-  Row,
-  Col,
-  Popover,
-  Select,
-} from "antd";
+import { Avatar, Button, List, Row, Col, Popover, Select } from "antd";
 
 import cookie from "react-cookies";
 
@@ -27,9 +19,7 @@ import {
 } from "../chat-window/redux/chat-client.slice";
 import { AUTH_ACCESS_TOKEN } from "../auth/constants/auth.keys";
 import Chats from "./group/screens/Chats";
-import {
-  IGroupResponse,
-} from "./group/types/groput-chat.types";
+import { IGroupResponse } from "./group/types/groput-chat.types";
 import { getMyGroup } from "./group/redux/getMy-groups";
 import { singleGroupSlice } from "./group/redux/get-single-group.slice";
 
@@ -85,7 +75,7 @@ export default function MainLayout({ children }: any) {
     console.log("search:", val);
   }
 
-  const getGroups =  useCallback( async () => {
+  const getGroups = useCallback(async () => {
     const token = cookie.load(AUTH_ACCESS_TOKEN);
 
     const data: any = {
@@ -99,7 +89,7 @@ export default function MainLayout({ children }: any) {
     dispatch(initChat());
 
     console.log(res.payload?.filter((d: any) => d.meta !== null));
-  },[dispatch]);
+  }, [dispatch]);
 
   useEffect(() => {
     getGroups();
@@ -230,7 +220,7 @@ export default function MainLayout({ children }: any) {
           ></Button>
           <Button type="link">{AppIcons.CloseOutlined}</Button>
         </Row> */}
-        <Row className={styles.chatRightHeader}>
+        {/* <Row className={styles.chatRightHeader}>
           <Col className={styles.chatRightHeaderTitle}>
             <div>
               <Avatar
@@ -277,9 +267,9 @@ export default function MainLayout({ children }: any) {
                   {allUsers?.map((user) => (
                     <Option value={user._id}>{user.name}</Option>
                   ))}
-                  {/* <Option value="jack">Jack</Option>
+                  <Option value="jack">Jack</Option>
                   <Option value="lucy">Lucy</Option>
-                  <Option value="tom">Tom</Option> */}
+                  <Option value="tom">Tom</Option> 
                 </Select>
               }
               title="Title"
@@ -292,11 +282,11 @@ export default function MainLayout({ children }: any) {
                 onClick={() => console.log("add member")}
                 icon={AppIcons.UserAddOutlined}
               ></Button>
-              {/* <Button type="primary">Click me</Button> */}
+              {/* <Button type="primary">Click me</Button> 
             </Popover>
-            <Button type="link" icon={AppIcons.InfoCircleFilled}></Button>
+            <Button type="link" href="" icon={AppIcons.InfoCircleFilled}></Button>
           </Col>
-        </Row>
+        </Row> */}
         {console.log("dddddddddd", groupItem)}
         <Chats groupItem={groupItem} />
 

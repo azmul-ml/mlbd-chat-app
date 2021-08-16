@@ -1,7 +1,8 @@
 import React from "react";
-import { Button, Col, List, Row } from "antd";
+import { Button, Col, List, Row, Avatar, Popover, Select } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import cookie from "react-cookies";
 import { AppIcons, msgActButtons } from "../../AppIcons";
 import styles from "../../layout.module.scss";
@@ -10,10 +11,17 @@ import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { AUTH_ACCESS_TOKEN } from "../../../auth/constants/auth.keys";
 import { sendMessage } from "../redux/send-message.slice";
 
+const { Option } = Select;
+
 export default function Chats({ groupItem }: any) {
+  const { id } = useParams<{ id: string }>();
+  const allUsers = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const singleGroup: any = useAppSelector((state) => state.singleGroup);
+
+  const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState("");
+
   const handleMessageChange = (e: any) => {
     setMessage(e.target.value);
   };
@@ -29,8 +37,84 @@ export default function Chats({ groupItem }: any) {
     dispatch(sendMessage(data));
   };
 
+  const handleVisibleChange = (visible: any) => {
+    setVisible(true);
+  };
+  function onChange(value: any) {
+    console.log(`selected ${value}`);
+  }
+  function onSearch(val: any) {
+    console.log("search:", val);
+  }
+
   return (
     <>
+      <Row className={styles.chatRightHeader}>
+        <Col className={styles.chatRightHeaderTitle}>
+          <div>
+            <Avatar size={40} icon="user" className={styles.chatRightAvatar} />
+          </div>
+
+          <Col className={styles.chatRightHeaderTitleText}>
+            John Carrey
+            <Col className={styles.chatStatus}>
+              <span
+                className={
+                  styles.chatStatusDot + " " + styles.chatStatusDotOnline
+                }
+              ></span>
+              <span className={styles.chatStatusText}>Online</span>
+            </Col>
+          </Col>
+        </Col>
+
+        <Col className={styles.chatRightHeaderAction}>
+          <Button type="link" icon={AppIcons.SearchOutlined}></Button>
+          <Button type="link" icon={AppIcons.PhoneFilled}></Button>
+          <Popover
+            content={
+              <Select
+                showSearch
+                mode="multiple"
+                style={{ width: 200 }}
+                placeholder="Select a person"
+                optionFilterProp="children"
+                onChange={onChange}
+                // onFocus={onFocus}
+                // onBlur={onBlur}
+                onSearch={onSearch}
+                filterOption={(input, option: any) =>
+                  option.children.toLowerCase().indexOf(input.toLowerCase()) >=
+                  0
+                }
+              >
+                {allUsers?.map((user) => (
+                  <Option value={user._id}>{user.name}</Option>
+                ))}
+                {/* <Option value="jack">Jack</Option>
+                  <Option value="lucy">Lucy</Option>
+                  <Option value="tom">Tom</Option> */}
+              </Select>
+            }
+            title="Title"
+            trigger="click"
+            visible={visible}
+            onVisibleChange={handleVisibleChange}
+          >
+            <Button
+              type="link"
+              onClick={() => console.log("add member")}
+              icon={AppIcons.UserAddOutlined}
+            ></Button>
+            {/* <Button type="primary">Click me</Button> */}
+          </Popover>
+          <Button
+            type="link"
+            href={`/app/room/${id}/settings`}
+            icon={AppIcons.InfoCircleFilled}
+          ></Button>
+        </Col>
+      </Row>
       <Row className={styles.chatWindow}>
         <Col span={24} className={styles.chatMessage}>
           <Row className={styles.chatMessageName}>
