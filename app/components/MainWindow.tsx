@@ -348,7 +348,7 @@ const AntDesignScreen = () => {
                 <Col className={styles.chatMessageText}>
                   Another message that I received here will be shown here. This
                   is a test message that shows if my construction of this chat
-                  is good enough for production.
+                  is good enough for production.ccccc
                 </Col>
 
                 <Col className={styles.chatMessageAction}>
