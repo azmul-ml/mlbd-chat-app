@@ -10,9 +10,11 @@ import { ISentMessage } from "../types/group-chat.types";
 import { AUTH_ACCESS_TOKEN } from "../../../auth/constants/auth.keys";
 import { sendMessage } from "../redux/send-message.slice";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import classNames from "classnames/bind";
 
 export default function Chats({ groupItem }: any) {
   const dispatch = useAppDispatch();
+  const cx = classNames.bind(styles);
   const singleGroup: any = useAppSelector((state) => state.singleGroup);
   const [message, setMessage] = useState("");
   const handleMessageChange = (e: any) => {
@@ -324,15 +326,11 @@ export default function Chats({ groupItem }: any) {
         </Col>
       </Row>
 
-      <Row className={styles.chatComposePanel}>
+      <Row className={cx("chatComposePanel", "chBlock")}>
         <form>
           <Col className={styles.chatCompose}>
-            <TextArea
-              onChange={handleMessageChange}
-              className={styles.textArea}
-              rows={4}
-            />
-            <Button onClick={handleSentMessage}>Send</Button>
+            <TextArea className={styles.textArea} rows={4} />
+            <Button>Send</Button>
           </Col>
 
           <Col className={styles.chatComposeActions}>

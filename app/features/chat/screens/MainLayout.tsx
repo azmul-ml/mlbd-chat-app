@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import classNames from "classnames/bind";
 
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -35,6 +36,22 @@ const { Option } = Select;
 //   "Financial Documents",
 // ];
 
+const data = [
+  "Michael Jackson",
+  "Rupert Mardoc",
+  "Cameron Diaz",
+  "Jim Carrey",
+  "Jennifer Anniston",
+];
+
+const newData = [
+  "Frontend Discussion",
+  "Backend Discussion",
+  "Official Documents",
+  "Chitchat Group",
+  "Financial Documents",
+];
+
 export default function MainLayout({ children }: any) {
   const dispatch = useAppDispatch();
   let router = useRouter();
@@ -44,6 +61,9 @@ export default function MainLayout({ children }: any) {
   const [groupItem] = useState({});
 
   const allUsers = useAppSelector((state) => state.user);
+  const cx = classNames.bind(styles);
+
+  const [fullScreen] = useState(false);
 
   function closeModal() {
     setIsOpen(false);
@@ -99,8 +119,22 @@ export default function MainLayout({ children }: any) {
   }, [getGroups]);
 
   return (
-    <Row className={styles.chatMain}>
-      <Col span={8} className={styles.chatLeft}>
+    <Row
+      className={
+        fullScreen
+          ? styles.chatMain + " " + styles.chatMainFullscreen
+          : styles.chatMain
+      }
+    >
+      <Col
+        xs={0}
+        sm={0}
+        md={6}
+        lg={6}
+        xl={6}
+        xxl={6}
+        className={styles.chatLeft}
+      >
         <Row className={styles.chatLeftHeader}>
           <Avatar size={50} icon="user" className={styles.chatLeftAvatar} />
 
@@ -122,7 +156,7 @@ export default function MainLayout({ children }: any) {
           </Col>
         </Row>
 
-        <Row className={styles.chatLeftDetails}>
+        <Row className={cx("chatLeftDetails", "chBlock")}>
           <Title level={4} className={styles.chatLeftDetailsHeader}>
             {AppIcons.CaretDownOutlined}
             <span className={styles.chatLeftDetailsHeaderText}>
@@ -136,7 +170,7 @@ export default function MainLayout({ children }: any) {
               dataSource={data}
               renderItem={(item) => (
                 <List.Item>
-                  <Link href="/app">
+                  <Link href="/">
                     <a>
                       {item}
                       <span className={styles.chatMessageCount}>5</span>
@@ -154,7 +188,7 @@ export default function MainLayout({ children }: any) {
               styles.chatLeftDetailsHeaderLink
             }
           >
-            <Link href="/app">
+            <Link href="/">
               <a>
                 {AppIcons.MessageOutlined}
                 <span className={styles.chatLeftDetailsHeaderText}>
@@ -171,7 +205,7 @@ export default function MainLayout({ children }: any) {
               styles.chatLeftDetailsHeaderLink
             }
           >
-            <Link href="/app">
+            <Link href="/">
               <a>
                 {AppIcons.EditOutlined}
                 <span className={styles.chatLeftDetailsHeaderText}>Draft</span>
@@ -202,7 +236,7 @@ export default function MainLayout({ children }: any) {
           <Row className={styles.chatGroupList}>
             <List
               dataSource={myGroups}
-              renderItem={(item: IGroupResponse) => (
+              renderItem={(item: any) => (
                 <List.Item>
                   <div>
                     {AppIcons.LockOutlined}
@@ -218,29 +252,18 @@ export default function MainLayout({ children }: any) {
         </Row>
       </Col>
 
-      <Col span={16} className={styles.chatRight}>
-        {/* <Row className={styles.chatClose}>
-          <Button type="link">{AppIcons.MinusOutlined}</Button>
-          <Button
-            type="link"
-           
-            icon={
-              fullScreen
-                ? AppIcons.FullscreenExitOutlined
-                : AppIcons.FullscreenOutlined
-            }
-          ></Button>
-          <Button type="link">{AppIcons.CloseOutlined}</Button>
-        </Row> */}
+      <Col
+        xs={24}
+        sm={24}
+        md={18}
+        lg={18}
+        xl={18}
+        xxl={18}
+        className={styles.chatRight}
+      >
         <Row className={styles.chatRightHeader}>
           <Col className={styles.chatRightHeaderTitle}>
-            <div>
-              <Avatar
-                size={40}
-                icon="user"
-                className={styles.chatRightAvatar}
-              />
-            </div>
+            <Avatar size={40} icon="user" className={styles.chatRightAvatar} />
 
             <Col className={styles.chatRightHeaderTitleText}>
               John Carrey
@@ -253,6 +276,13 @@ export default function MainLayout({ children }: any) {
                 <span className={styles.chatStatusText}>Online</span>
               </Col>
             </Col>
+          </Col>
+
+          <Col className={styles.chatRightHeaderAction}>
+            <Button type="link" icon={AppIcons.SearchOutlined}></Button>
+            <Button type="link" icon={AppIcons.PhoneFilled}></Button>
+            <Button type="link" icon={AppIcons.UserAddOutlined}></Button>
+            <Button type="link" icon={AppIcons.InfoCircleFilled}></Button>
           </Col>
 
           <Col className={styles.chatRightHeaderAction}>
@@ -314,11 +344,3 @@ export default function MainLayout({ children }: any) {
     </Row>
   );
 }
-
-const data = [
-  "Michael Jackson",
-  "Rupert Mardoc",
-  "Cameron Diaz",
-  "Jim Carrey",
-  "Jennifer Anniston",
-];
