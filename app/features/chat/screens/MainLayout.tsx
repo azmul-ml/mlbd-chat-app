@@ -115,7 +115,7 @@ export default function MainLayout({ children }: any) {
 
   useEffect(() => {
     getGroups();
-    exClientChat();
+    // exClientChat();
   }, [getGroups]);
 
   return (
@@ -278,12 +278,12 @@ export default function MainLayout({ children }: any) {
             </Col>
           </Col>
 
-          <Col className={styles.chatRightHeaderAction}>
+          {/* <Col className={styles.chatRightHeaderAction}>
             <Button type="link" icon={AppIcons.SearchOutlined}></Button>
             <Button type="link" icon={AppIcons.PhoneFilled}></Button>
             <Button type="link" icon={AppIcons.UserAddOutlined}></Button>
             <Button type="link" icon={AppIcons.InfoCircleFilled}></Button>
-          </Col>
+          </Col> */}
 
           <Col className={styles.chatRightHeaderAction}>
             <Button type="link" icon={AppIcons.SearchOutlined}></Button>

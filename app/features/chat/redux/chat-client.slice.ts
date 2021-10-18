@@ -53,7 +53,7 @@ export const exClientChatTh = createAsyncThunk(
   "chat/client",
   () => (dispatch: any) => {
     initialClient = new ChatClient({
-      chatApiEndpoint: "http://localhost:3000",
+      chatApiEndpoint: "http://localhost:3001",
       tokenProvider,
       pusherOptions,
     });
@@ -83,7 +83,7 @@ export const exClientChat = () => {
   // const dispatch = useAppDispatch();
   console.log("dddddddddddd");
   initialClient = new ChatClient({
-    chatApiEndpoint: "http://localhost:3000",
+    chatApiEndpoint: "http://localhost:3001",
     tokenProvider,
     pusherOptions,
   });
