@@ -106,9 +106,6 @@ export default function MainLayout({ children }: any) {
     const res: any = await dispatch(getMyGroup(data));
     const groups = res.payload?.filter((d: any) => d.meta !== null);
     setMyGroups(groups);
-    const { initChat } = chatClient.actions;
-    dispatch(exClientChatTh());
-    dispatch(initChat());
 
     console.log(res.payload?.filter((d: any) => d.meta !== null));
   }, [dispatch]);

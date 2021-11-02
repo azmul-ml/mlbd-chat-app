@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import cookie from "react-cookies";
+import {
+  exClientChat,
+  exClientChatTh,
+} from "../../chat/redux/chat-client.slice";
 
 import { loginApi, registerApi } from "../api/auth.api";
 import { AUTH_ACCESS_TOKEN } from "../constants/auth.keys";
@@ -13,12 +17,6 @@ const initialState = {
   errormessage: "",
 };
 
-export const authSlice = createSlice({
-  name: "user",
-  initialState,
-  reducers: {},
-});
-
 export const loginUser = createAsyncThunk(
   "auth/login",
   (credentials: LoginCredentials, { dispatch }) =>
@@ -26,11 +24,23 @@ export const loginUser = createAsyncThunk(
       (res: any) => {
         console.log(res);
         cookie.save(AUTH_ACCESS_TOKEN, res.data.token, {});
+        // exClientChat();
+        dispatch(exClientChatTh(""));
         return res.data;
       },
       (err) => err.message
     )
 );
+export const authSlice = createSlice({
+  name: "user",
+  initialState,
+  reducers: {},
+  extraReducers: {
+    [loginUser.fulfilled.toString()]: (state, action) => {
+      // exClientChat();
+    },
+  },
+});
 
 export const registerUser = createAsyncThunk(
   "auth/register",
@@ -39,6 +49,7 @@ export const registerUser = createAsyncThunk(
       (res) => {
         // console.log(res);
         // cookie.save(AUTH_ACCESS_TOKEN, res.data.token, {});
+
         return res.data;
       },
       (err) => err.message
