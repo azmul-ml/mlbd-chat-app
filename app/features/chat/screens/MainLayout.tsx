@@ -4,13 +4,15 @@ import classNames from "classnames/bind";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import { Avatar, Button, List, Row, Col, Popover, Select } from "antd";
+import { Avatar, Button, List, Row, Col, Popover, Select, Dropdown, Menu, Modal as SettingModal } from "antd";
 
 import cookie from "react-cookies";
+import { DownOutlined, PhoneOutlined, StarOutlined, BellOutlined } from '@ant-design/icons';
 
 import styles from "../../../../styles/layout.module.scss";
 import { AppIcons } from "./AppICons";
 import Modal from "../group/screens/Modal";
+import GroupSettings from "../group/screens/GroupSettings";
 
 import { getSingleGroup } from "../group/redux/get-single-group.slice";
 import Title from "antd/lib/typography/Title";
@@ -52,11 +54,26 @@ const newData = [
   "Financial Documents",
 ];
 
+const menu = (
+  <Menu>
+    <Menu.Item key="1">
+      <small>Move to...</small>
+    </Menu.Item>
+    <Menu.Item key="2" icon={<StarOutlined />}>
+      Starred
+    </Menu.Item>
+    <Menu.Item key="3">
+      Move to new section
+    </Menu.Item>
+  </Menu>
+);
+
 export default function MainLayout({ children }: any) {
   const dispatch = useAppDispatch();
   let router = useRouter();
   const [modalIsOpen, setIsOpen] = useState(false);
   const [myGroups, setMyGroups] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
   const [visible, setVisible] = useState(false);
   const [groupItem] = useState({});
 
@@ -64,6 +81,19 @@ export default function MainLayout({ children }: any) {
   const cx = classNames.bind(styles);
 
   const [fullScreen] = useState(false);
+
+  const titleContainer = [
+    <h3 key="one">Group / Person name</h3>,
+    <div key="two">
+      <Dropdown overlay={menu}>
+        <Button>
+          <StarOutlined /><DownOutlined />
+        </Button>
+      </Dropdown>
+      <Button icon={<BellOutlined />}>Get notification</Button>
+      <Button icon={<PhoneOutlined />}>Start a call</Button>
+    </div>
+  ]
 
   function closeModal() {
     setIsOpen(false);
@@ -88,7 +118,7 @@ export default function MainLayout({ children }: any) {
   };
 
   const handleVisibleChange = (visible: any) => {
-    setVisible(true);
+    setShowPopup(true);
   };
   function onChange(value: any) {
     console.log(`selected ${value}`);
@@ -263,7 +293,19 @@ export default function MainLayout({ children }: any) {
             <Avatar size={40} icon="user" className={styles.chatRightAvatar} />
 
             <Col className={styles.chatRightHeaderTitleText}>
-              John Carrey
+              <a href="javascript:void(0);" onClick={() => setVisible(true)}>Mamun Khandaker</a>
+
+              <SettingModal
+                title={titleContainer}
+                centered
+                visible={visible}
+                onOk={() => setVisible(false)}
+                onCancel={() => setVisible(false)}
+                width={1000}
+              >
+                <GroupSettings />
+              </SettingModal>
+
               <Col className={styles.chatStatus}>
                 <span
                   className={
@@ -315,7 +357,7 @@ export default function MainLayout({ children }: any) {
               }
               title="Title"
               trigger="click"
-              visible={visible}
+              // showPopup={showPopup}
               onVisibleChange={handleVisibleChange}
             >
               <Button
