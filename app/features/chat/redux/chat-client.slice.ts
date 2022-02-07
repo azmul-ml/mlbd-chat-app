@@ -3,7 +3,7 @@ import { ChatClient } from "@mlbd/chat-client";
 
 import { tokenProvider, pusherOptions } from "../helpers/chat.helpers";
 import { store } from "../../../redux/store";
-import { onMessageRecieveSlice } from "../group/redux/onMessageRecieve";
+import { onClientStablish } from "./onMessageRecieve";
 
 let initialClient: any = null;
 
@@ -13,51 +13,19 @@ export const chatClient = createSlice({
   reducers: {},
 });
 
-const handleSubscriptions = (client: any) => {
-  const { init } = onMessageRecieveSlice.actions;
-  // dispatch(init(client));
-  store.dispatch(init(client));
-  console.log(store);
-  // dispatch.onMessageRead.init(client);
-  // dispatch.onAddedToGroup.init(client);
-  // dispatch.onGroupUpdated.init(client);
-  // dispatch.onGroupDeleted.init(client);
-  // dispatch.onMessageUpdated.init(client);
-  // dispatch.onMessageDeleted.init(client);
-  // dispatch.onGroupMemberAdded.init(client);
-  // dispatch.onSavedMessageAdded.init(client);
-  // dispatch.onGroupMemberRemoved.init(client);
-  // dispatch.onPinnedMessageAdded.init(client);
-  // dispatch.onSavedMessageRemoved.init(client);
-  // dispatch.onPinnedMessageRemoved.init(client);
+const handleSubscriptions = (client: any, dispatch: any) => {
+  onClientStablish(client, dispatch);
 };
-export const exClientChatTh = createAsyncThunk(
-  "chat/client",
-  (credentials: any, dispatch: any) => {
-    initialClient = new ChatClient({
-      chatApiEndpoint: "http://localhost:3001",
-      tokenProvider,
-      pusherOptions,
-    });
 
-    initialClient.connect().then(() => {
-      handleSubscriptions(initialClient);
-    });
-  }
-);
-
-export const exClientChat = ()  => {
-  // const dispatch = useAppDispatch();
-
+export const exClientChat = (dispatch: any) => {
   initialClient = new ChatClient({
     chatApiEndpoint: "http://localhost:3001",
     tokenProvider,
-    pusherOptions, 
+    pusherOptions,
   });
 
-  // initialClient.on;/
-
   initialClient.connect().then(() => {
-    handleSubscriptions(initialClient);
+    handleSubscriptions(initialClient, dispatch);
+    console.log(">>>>Stablished>>>>");
   });
 };

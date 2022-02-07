@@ -15,7 +15,8 @@ export default function Register() {
 
   const handleSubmit = async (values: RegistrationCredentials) => {
     try {
-      const response = await dispatch(registerUser(values));
+      const data = { ...values, roles: ["Admin"] };
+      const response = await dispatch(registerUser(data));
       if (response.payload) {
         router.push("/");
       }

@@ -1,20 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import cookie from "react-cookies";
-import {
-  exClientChat,
-  exClientChatTh,
-} from "../../chat/redux/chat-client.slice";
+import { exClientChat } from "../../chat/redux/chat-client.slice";
+// import { exClientChatTh } from "../../chat/redux/chat-client.slice";
 
 import { loginApi, registerApi } from "../api/auth.api";
 import { AUTH_ACCESS_TOKEN } from "../constants/auth.keys";
 import { LoginCredentials, RegistrationCredentials } from "../types/auth.types";
 const initialState = {
-  username: "",
-  email: "",
-  isFething: false,
-  isSuccess: false,
-  isError: false,
-  errormessage: "",
+  data: {
+    username: "",
+    email: "",
+    isFething: false,
+    isSuccess: false,
+    isError: false,
+    errormessage: "",
+  },
 };
 
 export const loginUser = createAsyncThunk(
@@ -22,10 +22,10 @@ export const loginUser = createAsyncThunk(
   (credentials: LoginCredentials, { dispatch }) =>
     loginApi(credentials).then(
       (res: any) => {
-        console.log(res);
         cookie.save(AUTH_ACCESS_TOKEN, res.data.token, {});
-        // exClientChat();
-        dispatch(exClientChatTh(""));
+        if (res.data) {
+          exClientChat(dispatch);
+        }
         return res.data;
       },
       (err) => err.message
@@ -35,10 +35,10 @@ export const authSlice = createSlice({
   name: "user",
   initialState,
   reducers: {},
-  extraReducers: {
-    [loginUser.fulfilled.toString()]: (state, action) => {
-      // exClientChat();
-    },
+  extraReducers: (builder) => {
+    builder.addCase(loginUser.fulfilled, (state, action) => {
+      state.data = action.payload.data;
+    });
   },
 });
 
@@ -47,7 +47,6 @@ export const registerUser = createAsyncThunk(
   (credentials: RegistrationCredentials, { dispatch }) =>
     registerApi(credentials).then(
       (res) => {
-        // console.log(res);
         // cookie.save(AUTH_ACCESS_TOKEN, res.data.token, {});
 
         return res.data;

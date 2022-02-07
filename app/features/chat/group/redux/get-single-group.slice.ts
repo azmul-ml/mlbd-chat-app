@@ -3,16 +3,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   singleGroup: {},
+  currentGroup: {},
 };
-export const singleGroupSlice = createSlice({
-  name: "single-group",
-  initialState,
-  reducers: {
-    addSingleGroup: (state, action: any) => {
-      return { ...action.payload };
-    },
-  },
-});
 
 export const getSingleGroup = createAsyncThunk(
   "get/group",
@@ -23,5 +15,19 @@ export const getSingleGroup = createAsyncThunk(
   }
   // (err) => err.message
 );
+export const singleGroupSlice = createSlice({
+  name: "single-group",
+  initialState,
+  reducers: {
+    addSingleGroup: (state, action: any) => {
+      return { ...action.payload };
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getSingleGroup.fulfilled, (state, action) => {
+      state.currentGroup = action.payload;
+    });
+  },
+});
 
 export default singleGroupSlice.reducer;

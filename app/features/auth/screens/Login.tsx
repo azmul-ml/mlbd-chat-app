@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import { Form, Input, Button, Row, Col } from "antd";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import cookie from "react-cookies";
+
 import { loginUser } from "../redux/auth.slice";
 import { LoginCredentials } from "../types/auth.types";
 import { useAppDispatch } from "../../../redux/hooks";
+import { getMyGroup } from "../../chat/group/redux/getMy-group";
+import { AUTH_ACCESS_TOKEN } from "../constants/auth.keys";
 
 export default function Login() {
   const [form] = Form.useForm();
@@ -16,7 +20,12 @@ export default function Login() {
     try {
       const response = await dispatch(loginUser(values));
       if (response.payload.data) {
-        router.push("/app");
+        const data = {
+          token: cookie.load(AUTH_ACCESS_TOKEN),
+        };
+        const res = await dispatch(getMyGroup(data));
+        console.log(res);
+        router.push(`/room/${res.payload[0].id}`);
       }
     } finally {
       setisSubmit(false);

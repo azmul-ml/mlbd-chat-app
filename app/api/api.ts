@@ -14,9 +14,7 @@ const anonymousEndpoints = [AuthEndpointsEnum.LOGIN.toString()];
  */
 const authInterceptor = async (request: AxiosRequestConfig) => {
   const { accessToken } = getTokens();
-  console.log(accessToken);
 
-  console.log(request);
   const isAnonymous = anonymousEndpoints.some((endpoint) =>
     request.url?.startsWith(endpoint)
   );

@@ -8,7 +8,6 @@ export const creatGroupSlice = createAsyncThunk(
   (credentials: ICreateGroupChat, { dispatch }) =>
     createGroupChat(credentials).then(
       (res) => {
-        console.log(res);
         return null;
       },
       (err) => err.message

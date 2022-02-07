@@ -19,7 +19,6 @@ export const getMyGroup = createAsyncThunk(
   "get/user",
   async (data: any) => {
     const res = await getMyGroupList(data);
-    console.log(res);
     return res.data;
   }
   // (err) => err.message

@@ -54,7 +54,6 @@ export default function Modal({
         onRequestClose={onRequestClose}
       >
         <h3>Create Group</h3>
-        {console.log(users)}
         <Formik
           initialValues={{ name: "" }}
           onSubmit={(values, { setSubmitting }) => {
